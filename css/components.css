@@ -229,6 +229,30 @@
   background: #000;
 }
 
+/* Big Black Separator Sections between videos */
+.video-separator-section {
+  width: 100%;
+  background: #000000;
+  padding: 130px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  box-sizing: border-box;
+}
+
+.video-separator-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 .full-bleed-video-section video {
   width: 100%;
   height: 100%;

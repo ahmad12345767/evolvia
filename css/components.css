@@ -74,27 +74,106 @@
   width: 100%;
 }
 
+/* Magic UI Shimmer Button Implementation for all primary purple buttons */
 .btn-primary {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 12px 24px;
+  padding: 12px 26px;
   background: var(--gradient-primary);
   color: #ffffff;
   font-weight: 600;
   font-size: 0.95rem;
   border-radius: var(--radius-full);
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(129, 74, 200, 0.4);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(129, 74, 200, 0.45), 0 0 15px rgba(223, 122, 254, 0.25);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   text-decoration: none;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Shimmer beam sweep animation */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  animation: magicShimmerSweep 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.btn-primary span,
+.btn-primary * {
+  position: relative;
+  z-index: 2;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(223, 122, 254, 0.5);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(223, 122, 254, 0.65), 0 0 25px rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+@keyframes magicShimmerSweep {
+  0% {
+    left: -100%;
+  }
+  60%, 100% {
+    left: 140%;
+  }
+}
+
+/* Magic UI Rainbow Button Effect for Menu Bar Header Button */
+.btn-rainbow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 24px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  background: 
+    linear-gradient(#0e051a, #0e051a) padding-box,
+    linear-gradient(90deg, #ff2a70, #ff7e40, #ffea00, #05d550, #00d2ff, #9d4edf, #ff2a70) border-box;
+  background-size: 100% 100%, 200% 100%;
+  animation: rainbowBorderRotate 3s linear infinite;
+  box-shadow: 0 0 18px rgba(157, 78, 223, 0.45), 0 0 10px rgba(0, 210, 255, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+}
+
+.btn-rainbow:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 0 28px rgba(157, 78, 223, 0.8), 0 0 18px rgba(0, 210, 255, 0.6);
+  background: 
+    linear-gradient(#17092b, #17092b) padding-box,
+    linear-gradient(90deg, #ff2a70, #ff7e40, #ffea00, #05d550, #00d2ff, #9d4edf, #ff2a70) border-box;
+  background-size: 100% 100%, 200% 100%;
+}
+
+@keyframes rainbowBorderRotate {
+  0% { background-position: 0 0, 0% 50%; }
+  100% { background-position: 0 0, 200% 50%; }
 }
 
 .btn-secondary {

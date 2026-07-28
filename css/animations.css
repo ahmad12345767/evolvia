@@ -163,3 +163,28 @@
 .btn-glow:hover::before {
   left: 100%;
 }
+
+/* MagicUI TextReveal Scroll Component Styles */
+.magic-text-reveal {
+  position: relative;
+  word-wrap: break-word;
+}
+
+.magic-reveal-word {
+  display: inline-block;
+  opacity: 0.15;
+  filter: blur(4px);
+  transform: translateY(4px);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, filter, transform;
+  margin-right: 0.22em;
+  white-space: pre;
+}
+
+.gradient-text .magic-reveal-word {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+

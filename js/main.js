@@ -119,18 +119,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Task Manager Checkboxes Toggle
-  const taskCheckboxes = document.querySelectorAll('.task-checkbox');
-  taskCheckboxes.forEach((checkbox) => {
-    checkbox.addEventListener('click', () => {
-      checkbox.classList.toggle('checked');
-      const item = checkbox.closest('.task-item');
-      if (item) {
-        item.style.opacity = checkbox.classList.contains('checked') ? '0.6' : '1';
-      }
+    // Task Manager Checkboxes Toggle
+    const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+    taskCheckboxes.forEach((checkbox) => {
+      checkbox.addEventListener('click', () => {
+        checkbox.classList.toggle('checked');
+        const item = checkbox.closest('.task-item');
+        if (item) {
+          item.style.opacity = checkbox.classList.contains('checked') ? '0.6' : '1';
+        }
+      });
     });
+
+    // 5. MagicUI TextReveal Scroll Animation
+    initMagicTextReveal();
   });
-});
 
 // Toast notification helper
 function showToast(message) {
@@ -166,3 +169,79 @@ function showToast(message) {
     toast.style.transform = 'translateY(20px)';
   }, 4000);
 }
+
+// MagicUI TextReveal Scroll Effect Implementation
+function initMagicTextReveal() {
+  const textRevealElements = document.querySelectorAll('.magic-text-reveal');
+
+  textRevealElements.forEach((container) => {
+    const processNode = (node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent;
+        const words = text.split(/(\s+)/);
+        const fragment = document.createDocumentFragment();
+
+        words.forEach((w) => {
+          if (w.trim().length > 0) {
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'magic-reveal-word';
+            wordSpan.textContent = w;
+            fragment.appendChild(wordSpan);
+          } else if (w.length > 0) {
+            fragment.appendChild(document.createTextNode(w));
+          }
+        });
+        node.parentNode.replaceChild(fragment, node);
+      } else if (node.nodeType === Node.ELEMENT_NODE && !node.classList.contains('magic-reveal-word')) {
+        Array.from(node.childNodes).forEach(processNode);
+      }
+    };
+
+    Array.from(container.childNodes).forEach(processNode);
+
+    const wordSpans = Array.from(container.querySelectorAll('.magic-reveal-word'));
+    if (wordSpans.length === 0) return;
+
+    const totalWords = wordSpans.length;
+
+    const updateReveal = () => {
+      const parentSection = container.closest('.video-separator-section') || container;
+      const rect = parentSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Start reveal when top of section reaches 85% of viewport
+      // Finish reveal when top reaches 30% of viewport
+      const start = windowHeight * 0.85;
+      const end = windowHeight * 0.30;
+      const totalDistance = start - end;
+      const currentPos = start - rect.top;
+
+      let progress = currentPos / totalDistance;
+      progress = Math.max(0, Math.min(1, progress));
+
+      wordSpans.forEach((span, index) => {
+        const wordStart = index / totalWords;
+        const wordEnd = (index + 1) / totalWords;
+
+        if (progress >= wordEnd) {
+          span.style.opacity = '1';
+          span.style.filter = 'blur(0px)';
+          span.style.transform = 'translateY(0px)';
+        } else if (progress <= wordStart) {
+          span.style.opacity = '0.15';
+          span.style.filter = 'blur(4px)';
+          span.style.transform = 'translateY(4px)';
+        } else {
+          const wordProgress = (progress - wordStart) / (1 / totalWords);
+          span.style.opacity = (0.15 + 0.85 * wordProgress).toFixed(2);
+          span.style.filter = `blur(${(4 * (1 - wordProgress)).toFixed(1)}px)`;
+          span.style.transform = `translateY(${(4 * (1 - wordProgress)).toFixed(1)}px)`;
+        }
+      });
+    };
+
+    window.addEventListener('scroll', updateReveal, { passive: true });
+    updateReveal();
+  });
+}
+

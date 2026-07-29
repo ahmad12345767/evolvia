@@ -25,13 +25,35 @@
 }
 
 .logo-brand {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 1.35rem;
+  gap: 10px;
+  font-size: 1.4rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text-primary);
+  text-decoration: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.logo-brand:hover {
+  opacity: 0.95;
+  transform: scale(1.02);
+}
+
+.logo-mark-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  filter: drop-shadow(0 0 6px rgba(223, 122, 254, 0.45));
+}
+
+.logo-brand:hover .logo-mark-icon {
+  transform: rotate(90deg) scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(223, 122, 254, 0.8));
 }
 
 .logo-sparkle {

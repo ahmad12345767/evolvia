@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Outer Circle -->
+  <circle cx="50" cy="50" r="44" stroke="#ffffff" stroke-width="5"/>
+  <!-- Central Sparkle Star -->
+  <path d="M 6 50 C 35 48.5 48.5 35 50 6 C 51.5 35 65 48.5 94 50 C 65 51.5 51.5 65 50 94 C 48.5 65 35 51.5 6 50 Z" fill="#ffffff"/>
+  <!-- Right Horizontal Line -->
+  <line x1="50" y1="50" x2="94" y2="50" stroke="#ffffff" stroke-width="5"/>
+</svg>

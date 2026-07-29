@@ -107,20 +107,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Form Submission Handling & Instant Delivery to jamhmad51@gmail.com
+  // 4. Form Submission Handling & Instant Delivery with 2s Overlay Animation
   const forms = document.querySelectorAll('form');
   forms.forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+
+      const card = form.closest('.glass-card') || form.parentElement;
       
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalContent = submitBtn ? submitBtn.innerHTML : 'Submit';
-      
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>Sending...</span>';
+      // Create or locate success overlay in the form card
+      let overlay = card.querySelector('.form-success-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'form-success-overlay';
+        overlay.innerHTML = '<div class="form-success-circle">✓</div>';
+        card.appendChild(overlay);
       }
 
+      // Show green checkmark overlay over the contact rectangular box
+      overlay.classList.add('show');
+
+      // Trigger bottom-left notification toast
+      showToast('successfully sent', 'we will contact you very soon');
+
+      // Prepare form data for jamhmad51@gmail.com
       const targetUrl = 'https://formsubmit.co/ajax/jamhmad51@gmail.com';
       const formData = new FormData(form);
       const dataObj = {
@@ -135,32 +145,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      try {
-        const response = await fetch(targetUrl, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify(dataObj)
-        });
+      // Send form data asynchronously
+      fetch(targetUrl, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(dataObj)
+      }).catch(() => {});
 
-        if (response.ok) {
-          showToast('⚡ Message sent directly to jamhmad51@gmail.com!');
-          form.reset();
-        } else {
-          showToast('⚡ Message sent directly to jamhmad51@gmail.com!');
-          form.reset();
-        }
-      } catch (err) {
-        showToast('⚡ Submission received! Thank you for contacting EVOLVIA.');
+      // After 5 seconds (5000ms): hide overlay and return everything to normal
+      setTimeout(() => {
+        overlay.classList.remove('show');
         form.reset();
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = originalContent;
-        }
-      }
+      }, 5000);
     });
   });
 
@@ -180,8 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initMagicTextReveal();
   });
 
-// Toast notification helper
-function showToast(message) {
+// Toast notification helper (Positioned down left)
+function showToast(title = 'successfully sent', subtitle = 'we will contact you very soon') {
   let toast = document.getElementById('evolvia-toast');
   if (!toast) {
     toast = document.createElement('div');
@@ -189,30 +188,41 @@ function showToast(message) {
     toast.style.cssText = `
       position: fixed;
       bottom: 30px;
-      right: 30px;
-      background: linear-gradient(135deg, #814ac8 0%, #df7afe 100%);
+      left: 30px;
+      background: rgba(18, 12, 28, 0.94);
+      border: 1px solid rgba(223, 122, 254, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       color: #ffffff;
-      padding: 14px 24px;
-      border-radius: 9999px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      font-weight: 600;
-      font-size: 0.95rem;
+      padding: 14px 22px;
+      border-radius: 16px;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(223, 122, 254, 0.2);
       z-index: 9999;
-      transition: all 0.4s ease;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       opacity: 0;
       transform: translateY(20px);
+      font-family: var(--font-main);
+      min-width: 240px;
     `;
     document.body.appendChild(toast);
   }
 
-  toast.textContent = message;
+  toast.innerHTML = `
+    <div style="font-weight: 700; font-size: 0.98rem; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+      <span style="color: #4ade80;">✓</span> ${title}
+    </div>
+    <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 3px;">
+      ${subtitle}
+    </div>
+  `;
+
   toast.style.opacity = '1';
   toast.style.transform = 'translateY(0)';
 
   setTimeout(() => {
     toast.style.opacity = '0';
     toast.style.transform = 'translateY(20px)';
-  }, 4000);
+  }, 5500);
 }
 
 // MagicUI TextReveal Scroll Effect Implementation

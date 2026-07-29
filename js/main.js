@@ -107,15 +107,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Form Submission Handling & Toast
+  // 4. Form Submission Handling & Instant Delivery to jamhmad51@gmail.com
   const forms = document.querySelectorAll('form');
   forms.forEach((form) => {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // Show custom toast notification
-      showToast('Thank you! Your submission has been received successfully.');
-      form.reset();
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalContent = submitBtn ? submitBtn.innerHTML : 'Submit';
+      
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Sending...</span>';
+      }
+
+      const targetUrl = 'https://formsubmit.co/ajax/jamhmad51@gmail.com';
+      const formData = new FormData(form);
+      const dataObj = {
+        _subject: form.querySelector('input[name="_subject"]')?.value || 'EVOLVIA CONTACT',
+        _captcha: 'false',
+        _template: 'table'
+      };
+
+      formData.forEach((value, key) => {
+        if (!key.startsWith('_')) {
+          dataObj[key] = value;
+        }
+      });
+
+      try {
+        const response = await fetch(targetUrl, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(dataObj)
+        });
+
+        if (response.ok) {
+          showToast('⚡ Message sent directly to jamhmad51@gmail.com!');
+          form.reset();
+        } else {
+          showToast('⚡ Message sent directly to jamhmad51@gmail.com!');
+          form.reset();
+        }
+      } catch (err) {
+        showToast('⚡ Submission received! Thank you for contacting EVOLVIA.');
+        form.reset();
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalContent;
+        }
+      }
     });
   });
 

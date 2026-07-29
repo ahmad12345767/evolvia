@@ -92,30 +92,34 @@
 
         <!-- Contact Form -->
         <div class="glass-card reveal reveal-delay-1">
-          <form class="contact-form-grid">
+          <form class="contact-form-grid" action="https://formsubmit.co/jamhmad51@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="EVOLVIA CONTACT">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            
             <div>
               <label class="form-label">First Name</label>
-              <input type="text" class="input-field" placeholder="John" required>
+              <input type="text" name="First Name" class="input-field" placeholder="John" required>
             </div>
 
             <div>
               <label class="form-label">Last Name</label>
-              <input type="text" class="input-field" placeholder="Doe" required>
+              <input type="text" name="Last Name" class="input-field" placeholder="Doe" required>
             </div>
 
             <div class="form-group-full">
               <label class="form-label">Email Address</label>
-              <input type="email" class="input-field" placeholder="john@example.com" required>
+              <input type="email" name="Email" class="input-field" placeholder="john@example.com" required>
             </div>
 
             <div class="form-group-full">
               <label class="form-label">Message</label>
-              <textarea class="input-field" placeholder="Tell us about your project or system goals..." required></textarea>
+              <textarea name="Message" class="input-field" placeholder="Tell us about your project or system goals..." required></textarea>
             </div>
 
             <div class="form-group-full">
               <button type="submit" class="btn-primary btn-glow" style="width: 100%; padding: 14px 28px; font-size: 1rem;">
-                Submit Form
+                <span>Submit Form</span>
               </button>
             </div>
           </form>

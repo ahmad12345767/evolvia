@@ -342,8 +342,8 @@
   width: 100%;
   position: relative;
   z-index: 2;
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .video-showcase-group .full-bleed-video-section {
@@ -943,7 +943,7 @@
   width: 100%;
   position: relative;
   z-index: 2;
-  margin: 80px 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1113,3 +1113,38 @@ textarea.input-field {
   resize: vertical;
   min-height: 120px;
 }
+
+/* Glass Wave Divider Component (Standalone - Directly Next to Videos) */
+.wave-divider {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  z-index: 10;
+  pointer-events: none;
+  margin-top: 60px;
+  margin-bottom: 0;
+}
+
+.wave-divider-bottom {
+  transform: rotate(180deg);
+  margin-top: 0;
+  margin-bottom: 60px;
+}
+
+.wave-divider .glass-layer {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+
+  -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0,80 C240,140 480,20 720,60 C960,100 1200,20 1440,80 L1440,160 L0,160 Z"/></svg>');
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0,80 C240,140 480,20 720,60 C960,100 1200,20 1440,80 L1440,160 L0,160 Z"/></svg>');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+

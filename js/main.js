@@ -177,6 +177,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. MagicUI TextReveal Scroll Animation
     initMagicTextReveal();
+
+    // 6. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
+    initSmoothScroll();
   });
 
 // Toast notification helper (Positioned down left)
@@ -299,4 +302,73 @@ function initMagicTextReveal() {
     updateReveal();
   });
 }
+
+// Lenis & Framer Ultra-Smooth Heavy Weighted Inertia Scroll Implementation
+function initSmoothScroll() {
+  if (typeof Lenis !== 'undefined') {
+    const lenis = new Lenis({
+      duration: 1.8,          // Heavy luxury damping (1.8s momentum decay)
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      wheelMultiplier: 0.65,  // Takes deliberate effort / scrolls slower and heavier like Framer!
+      touchMultiplier: 1.0,
+      infinite: false,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  } else {
+    initCustomWeightedScroll();
+  }
+}
+
+function initCustomWeightedScroll() {
+  if ('ontouchstart' in window && window.innerWidth < 1024) return;
+
+  let targetY = window.scrollY;
+  let currentY = window.scrollY;
+  const ease = 0.065;      // Heavy inertia damping (lower = smoother & heavier)
+  const multiplier = 0.65; // Wheel scroll effort multiplier
+  let isScrolling = false;
+
+  window.addEventListener('wheel', (e) => {
+    if (e.target.closest('.chat-messages, .widget-box, .comparison-table')) return;
+
+    e.preventDefault();
+    targetY += e.deltaY * multiplier;
+
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    targetY = Math.max(0, Math.min(targetY, maxScroll));
+
+    if (!isScrolling) {
+      isScrolling = true;
+      requestAnimationFrame(render);
+    }
+  }, { passive: false });
+
+  function render() {
+    const diff = targetY - currentY;
+    currentY += diff * ease;
+
+    if (Math.abs(diff) > 0.3) {
+      window.scrollTo(0, currentY);
+      requestAnimationFrame(render);
+    } else {
+      window.scrollTo(0, targetY);
+      currentY = targetY;
+      isScrolling = false;
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!isScrolling) {
+      targetY = window.scrollY;
+      currentY = window.scrollY;
+    }
+  });
+}
+
 

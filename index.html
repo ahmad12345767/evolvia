@@ -111,7 +111,7 @@
 
       <div class="services-grid">
         <!-- Service Card 1: Workflow Automation -->
-        <div class="glass-card service-card-lg reveal">
+        <div class="glass-card service-card-md reveal">
           <div class="service-content">
             <h3 class="service-title">Workflow Automation</h3>
             <p class="service-desc">
@@ -166,40 +166,8 @@
           </div>
         </div>
 
-        <!-- Service Card 2: AI Assistant -->
-        <div class="glass-card service-card-sm reveal reveal-delay-1">
-          <div class="service-content">
-            <h3 class="service-title">AI Assistant</h3>
-            <p class="service-desc">
-              Feel free to talk to us by really easy clicks. Whether you want help in customer handling or making system
-              changes, just give the command.
-            </p>
-          </div>
-
-          <!-- Interactive AI Chat Widget -->
-          <div class="widget-box chat-container">
-            <div class="chat-header">
-              <span style="color: #df7afe;">⚡</span>
-              <strong style="font-size: 0.95rem;">What can I help with?</strong>
-            </div>
-            <div id="chat-messages" class="chat-messages">
-              <div class="chat-msg msg-ai">
-                Hello! I am your EVOLVIA AI Assistant. Select an action below to test my workflow capability.
-              </div>
-            </div>
-            <div class="chat-prompts">
-              <button class="chat-chip">Add document</button>
-              <button class="chat-chip">Analyze</button>
-              <button class="chat-chip">Generate Image</button>
-              <button class="chat-chip">research</button>
-              <button class="chat-chip">E-mail Sending..</button>
-              <button class="chat-chip">LinkedIn</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Service Card 3: Sales & Marketing -->
-        <div class="glass-card service-card-sm reveal reveal-delay-2">
+        <!-- Service Card 2: Sales & Marketing -->
+        <div class="glass-card service-card-md reveal reveal-delay-1">
           <div class="service-content">
             <h3 class="service-title">Sales & Marketing</h3>
             <p class="service-desc">
@@ -226,8 +194,48 @@
           </div>
         </div>
 
+        <!-- Service Card 3: AI Assistant (Full Width - Wide & Comfortable) -->
+        <div id="ai-assistant" class="glass-card service-card-full reveal reveal-delay-2">
+          <div class="service-content">
+            <h3 class="service-title">EVOLVIA AI Assistant</h3>
+            <p class="service-desc">
+              Ask me anything! Type a question or click a prompt below to learn about our custom web design services, pricing, build timelines, or workflow AI solutions.
+            </p>
+          </div>
+
+          <!-- Interactive AI Chat Widget -->
+          <div class="widget-box chat-container">
+            <div class="chat-header">
+              <span style="color: #df7afe; font-size: 1.1rem;">⚡</span>
+              <div>
+                <strong style="font-size: 1rem; display: block; line-height: 1.2;">Evie</strong>
+                <span style="font-size: 0.78rem; color: var(--text-secondary);">EVOLVIA AI Assistant</span>
+              </div>
+              <span class="badge" style="margin-left: auto; font-size: 0.75rem; background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.3); padding: 4px 10px;">
+                ● Evie Online
+              </span>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+              <div class="chat-msg msg-ai">
+                👋 Hi! I'm Evie, your AI assistant at EVOLVIA. Ask me anything about how we design and build custom websites, our development team, workflow automations, or let's just chat!
+              </div>
+            </div>
+            <div class="chat-prompts">
+              <button class="chat-chip">🌐 Web Design Services</button>
+              <button class="chat-chip">💰 Pricing & Packages</button>
+              <button class="chat-chip">⏱️ Build Timeline</button>
+              <button class="chat-chip">🤖 AI Automations</button>
+              <button class="chat-chip">📞 Book a Call</button>
+            </div>
+            <form id="chat-input-form" class="chat-input-row" style="display: flex; gap: 10px; margin-top: 14px;">
+              <input type="text" id="chat-user-input" class="input-field" placeholder="Ask EVOLVIA AI about web design, pricing, build timeline..." required style="padding: 12px 18px; font-size: 0.92rem; flex: 1;">
+              <button type="submit" class="btn-primary" style="padding: 12px 22px; font-size: 0.92rem; flex-shrink: 0;"><span>Send</span></button>
+            </form>
+          </div>
+        </div>
+
         <!-- Service Card 4: Custom Projects -->
-        <div class="glass-card service-card-lg reveal reveal-delay-3">
+        <div class="glass-card service-card-full reveal reveal-delay-3">
           <div class="service-content">
             <h3 class="service-title">Custom Projects</h3>
             <p class="service-desc">
@@ -768,6 +776,17 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating AI Agent Trigger Button (Bottom Right) -->
+  <a href="index.html#ai-assistant" id="floating-ai-agent" class="floating-ai-btn" aria-label="Chat with EVOLVIA AI Assistant">
+    <span class="floating-ai-badge"></span>
+    <svg class="floating-ai-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="5"/>
+      <path d="M 12 50 C 37 48.5 48.5 37 50 12 C 51.5 37 63 48.5 88 50 C 63 51.5 51.5 63 50 88 C 48.5 63 37 51.5 12 50 Z" fill="currentColor"/>
+      <line x1="50" y1="50" x2="88" y2="50" stroke="currentColor" stroke-width="5"/>
+    </svg>
+    <span class="floating-ai-tooltip">Talk to Evie ⚡</span>
+  </a>
 
   <!-- Scripts -->
   <script src="js/main.js"></script>

@@ -107,28 +107,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Form Submission Handling & Instant Delivery with 2s Overlay Animation
-  const forms = document.querySelectorAll('form');
-  forms.forEach((form) => {
+  // 4. Form Submission Handling & Instant Delivery to Gmail
+  const contactForms = document.querySelectorAll('.contact-form, .newsletter-form, form[action*="formsubmit"]');
+  contactForms.forEach((form) => {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      const card = form.closest('.glass-card') || form.parentElement;
-      
-      // Create or locate success overlay in the form card
-      let overlay = card.querySelector('.form-success-overlay');
-      if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'form-success-overlay';
-        overlay.innerHTML = '<div class="form-success-circle">✓</div>';
-        card.appendChild(overlay);
-      }
-
-      // Show green checkmark overlay over the contact rectangular box
-      overlay.classList.add('show');
-
-      // Trigger bottom-left notification toast
-      showToast('successfully sent', 'we will contact you very soon');
 
       // Prepare form data for jamhmad51@gmail.com
       const targetUrl = 'https://formsubmit.co/ajax/jamhmad51@gmail.com';
@@ -145,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
 
-      // Send form data asynchronously
+      // Send form data asynchronously to Gmail
       fetch(targetUrl, {
         method: 'POST',
         headers: { 
@@ -155,78 +138,42 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify(dataObj)
       }).catch(() => {});
 
-      // After 5 seconds (5000ms): hide overlay and return everything to normal
-      setTimeout(() => {
-        overlay.classList.remove('show');
-        form.reset();
-      }, 5000);
+      form.reset();
     });
   });
 
-    // Task Manager Checkboxes Toggle
-    const taskCheckboxes = document.querySelectorAll('.task-checkbox');
-    taskCheckboxes.forEach((checkbox) => {
-      checkbox.addEventListener('click', () => {
-        checkbox.classList.toggle('checked');
-        const item = checkbox.closest('.task-item');
-        if (item) {
-          item.style.opacity = checkbox.classList.contains('checked') ? '0.6' : '1';
-        }
-      });
+  // 5. Task Manager Checkboxes Toggle
+  const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+  taskCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener('click', () => {
+      checkbox.classList.toggle('checked');
+      const item = checkbox.closest('.task-item');
+      if (item) {
+        item.style.opacity = checkbox.classList.contains('checked') ? '0.6' : '1';
+      }
     });
-
-    // 5. MagicUI TextReveal Scroll Animation
-    initMagicTextReveal();
-
-    // 6. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
-    initSmoothScroll();
   });
 
-// Toast notification helper (Positioned down left)
-function showToast(title = 'successfully sent', subtitle = 'we will contact you very soon') {
-  let toast = document.getElementById('evolvia-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'evolvia-toast';
-    toast.style.cssText = `
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      background: rgba(18, 12, 28, 0.94);
-      border: 1px solid rgba(223, 122, 254, 0.35);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      color: #ffffff;
-      padding: 14px 22px;
-      border-radius: 16px;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(223, 122, 254, 0.2);
-      z-index: 9999;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      opacity: 0;
-      transform: translateY(20px);
-      font-family: var(--font-main);
-      min-width: 240px;
-    `;
-    document.body.appendChild(toast);
+  // 6. MagicUI TextReveal Scroll Animation
+  initMagicTextReveal();
+
+  // 7. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
+  initSmoothScroll();
+
+  // 8. Floating AI Agent Smooth Scroll Navigation
+  const floatingAiBtn = document.getElementById('floating-ai-agent');
+  if (floatingAiBtn) {
+    floatingAiBtn.addEventListener('click', (e) => {
+      const targetSec = document.getElementById('ai-assistant');
+      if (targetSec) {
+        e.preventDefault();
+        targetSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetSec.classList.add('ai-section-highlight');
+        setTimeout(() => targetSec.classList.remove('ai-section-highlight'), 2500);
+      }
+    });
   }
-
-  toast.innerHTML = `
-    <div style="font-weight: 700; font-size: 0.98rem; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-      <span style="color: #4ade80;">✓</span> ${title}
-    </div>
-    <div style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 3px;">
-      ${subtitle}
-    </div>
-  `;
-
-  toast.style.opacity = '1';
-  toast.style.transform = 'translateY(0)';
-
-  setTimeout(() => {
-    toast.style.opacity = '0';
-    toast.style.transform = 'translateY(20px)';
-  }, 5500);
-}
+});
 
 // MagicUI TextReveal Scroll Effect Implementation
 function initMagicTextReveal() {

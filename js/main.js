@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
   initSmoothScroll();
 
-  // 8. Floating AI Agent Smooth Scroll Navigation
+  // 8. Floating AI Agent Smooth Scroll Navigation & ElevenLabs Hover Reveal
   const floatingAiBtn = document.getElementById('floating-ai-agent');
   if (floatingAiBtn) {
     floatingAiBtn.addEventListener('click', (e) => {
@@ -170,8 +170,35 @@ document.addEventListener('DOMContentLoaded', () => {
         targetSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
         targetSec.classList.add('ai-section-highlight');
         setTimeout(() => targetSec.classList.remove('ai-section-highlight'), 2500);
+      } else {
+        window.location.href = 'index.html#ai-assistant';
       }
     });
+
+    // Hover reveal logic for ElevenLabs ConvAI widget
+    let hideTimer;
+    const updateWidgetHover = () => {
+      const convai = document.querySelector('elevenlabs-convai');
+      if (!convai) return;
+
+      const showWidget = () => {
+        clearTimeout(hideTimer);
+        convai.classList.add('show-convai');
+      };
+
+      const hideWidget = () => {
+        hideTimer = setTimeout(() => {
+          convai.classList.remove('show-convai');
+        }, 350);
+      };
+
+      floatingAiBtn.addEventListener('mouseenter', showWidget);
+      floatingAiBtn.addEventListener('mouseleave', hideWidget);
+      convai.addEventListener('mouseenter', showWidget);
+      convai.addEventListener('mouseleave', hideWidget);
+    };
+
+    setTimeout(updateWidgetHover, 500);
   }
 });
 

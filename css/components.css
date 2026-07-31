@@ -76,7 +76,8 @@
   padding: 4px 0;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover,
+.nav-link.active {
   color: var(--text-primary);
 }
 
@@ -92,7 +93,8 @@
   transition: width 0.3s ease;
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
   width: 100%;
 }
 
@@ -126,12 +128,10 @@
   left: -100%;
   width: 70%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      transparent 100%);
   transform: skewX(-20deg);
   animation: magicShimmerSweep 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
@@ -154,7 +154,9 @@
   0% {
     left: -100%;
   }
-  60%, 100% {
+
+  60%,
+  100% {
     left: 140%;
   }
 }
@@ -174,7 +176,7 @@
   border: 2px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  background: 
+  background:
     linear-gradient(#0e051a, #0e051a) padding-box,
     linear-gradient(90deg, #ff2a70, #ff7e40, #ffea00, #05d550, #00d2ff, #9d4edf, #ff2a70) border-box;
   background-size: 100% 100%, 200% 100%;
@@ -187,15 +189,20 @@
 .btn-rainbow:hover {
   transform: translateY(-2px) scale(1.04);
   box-shadow: 0 0 28px rgba(157, 78, 223, 0.8), 0 0 18px rgba(0, 210, 255, 0.6);
-  background: 
+  background:
     linear-gradient(#17092b, #17092b) padding-box,
     linear-gradient(90deg, #ff2a70, #ff7e40, #ffea00, #05d550, #00d2ff, #9d4edf, #ff2a70) border-box;
   background-size: 100% 100%, 200% 100%;
 }
 
 @keyframes rainbowBorderRotate {
-  0% { background-position: 0 0, 0% 50%; }
-  100% { background-position: 0 0, 200% 50%; }
+  0% {
+    background-position: 0 0, 0% 50%;
+  }
+
+  100% {
+    background-position: 0 0, 200% 50%;
+  }
 }
 
 .btn-secondary {
@@ -314,12 +321,10 @@
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.25) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.25) 50%,
+      transparent 100%);
   transform: skewX(-20deg);
   animation: magicShimmerSweep 3.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
@@ -414,7 +419,9 @@
   opacity: 0.98;
 }
 
-.avatar-img:first-child { margin-left: 0; }
+.avatar-img:first-child {
+  margin-left: 0;
+}
 
 /* Services Grid Section */
 .services-section {
@@ -445,7 +452,11 @@
 }
 
 @media (max-width: 992px) {
-  .service-card-lg, .service-card-md, .service-card-sm, .service-card-full {
+
+  .service-card-lg,
+  .service-card-md,
+  .service-card-sm,
+  .service-card-full {
     grid-column: span 12;
   }
 }
@@ -541,10 +552,25 @@
   font-family: var(--font-mono);
 }
 
-.status-approval { background: rgba(234, 179, 8, 0.15); color: #facc15; }
-.status-due { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-.status-tracking { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-.status-done { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+.status-approval {
+  background: rgba(234, 179, 8, 0.15);
+  color: #facc15;
+}
+
+.status-due {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+}
+
+.status-tracking {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+}
+
+.status-done {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
 
 /* Chat Assistant Widget */
 .chat-container {
@@ -612,15 +638,27 @@
   animation: dotJump 1.2s infinite ease-in-out;
 }
 
-.jumping-dots span:nth-child(1) { animation-delay: 0s; }
-.jumping-dots span:nth-child(2) { animation-delay: 0.2s; }
-.jumping-dots span:nth-child(3) { animation-delay: 0.4s; }
+.jumping-dots span:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.jumping-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.jumping-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
 
 @keyframes dotJump {
-  0%, 80%, 100% {
+
+  0%,
+  80%,
+  100% {
     transform: translateY(0);
     opacity: 0.35;
   }
+
   40% {
     transform: translateY(-5px);
     opacity: 1;
@@ -809,7 +847,8 @@
   margin-top: 32px;
 }
 
-.comparison-table th, .comparison-table td {
+.comparison-table th,
+.comparison-table td {
   padding: 18px 24px;
   text-align: left;
   border-bottom: 1px solid var(--border-glass);
@@ -1046,8 +1085,8 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 45%, transparent 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 .glass-transition-bottom {
@@ -1061,8 +1100,8 @@
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.6) 45%, transparent 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
-  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
 }
 
 /* Footer */
@@ -1163,6 +1202,7 @@
   .contact-form-grid {
     grid-template-columns: 1fr;
   }
+
   .form-group-full {
     grid-column: span 1;
   }
@@ -1254,9 +1294,9 @@ textarea.input-field {
 
 /* Floating AI Agent Trigger Button (Bottom Right) */
 .floating-ai-btn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
+  position: relative !important;
+  bottom: 0 !important;
+  right: 0 !important;
   width: 58px;
   height: 58px;
   border-radius: 50%;
@@ -1305,7 +1345,8 @@ textarea.input-field {
 
 .floating-ai-tooltip {
   position: absolute;
-  right: 70px;
+  right: 70px !important;
+  left: auto !important;
   top: 50%;
   transform: translateY(-50%) translateX(10px);
   background: rgba(18, 10, 30, 0.94);
@@ -1334,32 +1375,34 @@ textarea.input-field {
   position: fixed !important;
   bottom: 25px !important;
   right: 25px !important;
-  z-index: 99999 !important;
+  z-index: 999999 !important;
 }
 
-/* ElevenLabs ConvAI White Icon & Text Overrides & Top-Left Hover Reveal Positioning */
+/* ElevenLabs ConvAI White Icon & Text Overrides & Directly On Top of Circle Hover Reveal */
 elevenlabs-convai {
   --elevenlabs-base-primary: #ffffff !important;
   --elevenlabs-accent-primary: #ffffff !important;
-  position: absolute !important;
-  bottom: 70px !important;
-  right: 60px !important;
-  margin: 0 !important;
+  position: fixed !important;
+  bottom: 95px !important;
+  right: 25px !important;
+  z-index: 999999 !important;
+  display: block !important;
   opacity: 0 !important;
   visibility: hidden !important;
   pointer-events: none !important;
-  transform: translate(-10px, -10px) scale(0.92) !important;
+  transform: translateY(12px) scale(0.95) !important;
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease !important;
 }
 
-.floating-ai-wrapper:hover elevenlabs-convai,
+.floating-ai-wrapper:hover ~ elevenlabs-convai,
+#floating-ai-wrapper:hover elevenlabs-convai,
+.floating-ai-btn:hover ~ elevenlabs-convai,
 elevenlabs-convai.show-convai,
-elevenlabs-convai.convai-active,
 elevenlabs-convai:hover {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
-  transform: translate(0, 0) scale(1) !important;
+  transform: translateY(0) scale(1) !important;
 }
 
 elevenlabs-convai button svg,
@@ -1372,6 +1415,24 @@ elevenlabs-convai button {
   color: #ffffff !important;
 }
 
+/* Hide "Powered by ElevenAgents" / "Powered by ElevenLabs" branding */
+elevenlabs-convai [class*="branding"],
+elevenlabs-convai [class*="powered"],
+elevenlabs-convai [class*="attribution"],
+elevenlabs-convai [class*="footer"],
+elevenlabs-convai a[href*="elevenlabs"],
+elevenlabs-convai a[href*="eleven"],
+elevenlabs-convai span:has(a[href*="elevenlabs"]),
+elevenlabs-convai p:has(a[href*="elevenlabs"]) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  pointer-events: none !important;
+}
+
 /* Highlight Pulse for AI Assistant Card when navigated to */
 .ai-section-highlight {
   animation: cardHighlightPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1381,12 +1442,13 @@ elevenlabs-convai button {
   0% {
     box-shadow: 0 0 0 0 rgba(223, 122, 254, 0);
   }
+
   20% {
     box-shadow: 0 0 50px 8px rgba(223, 122, 254, 0.8), 0 0 20px 4px rgba(129, 74, 200, 0.6);
     border-color: rgba(223, 122, 254, 0.8);
   }
+
   100% {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   }
 }
-

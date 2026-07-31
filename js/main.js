@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
   initSmoothScroll();
 
-  // 8. Floating AI Agent Smooth Scroll Navigation & ElevenLabs Hover/Active Reveal
+  // 8. Floating AI Agent Smooth Scroll Navigation & ElevenLabs Hover/Hold Logic
   const wrapper = document.getElementById('floating-ai-wrapper');
   const floatingAiBtn = document.getElementById('floating-ai-agent');
 
@@ -177,17 +177,79 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Keep ConvAI active/visible when clicked or used
-    document.addEventListener('click', (e) => {
-      const convai = document.querySelector('elevenlabs-convai');
+    let hideTimer;
+    let isHoveringBtn = false;
+    let isHoveringWidget = false;
+
+    const getConvai = () => document.querySelector('elevenlabs-convai');
+
+    const updateVisibility = () => {
+      const convai = getConvai();
       if (!convai) return;
 
-      if (convai.contains(e.target)) {
-        convai.classList.add('convai-active');
-      } else if (wrapper && !wrapper.contains(e.target)) {
-        convai.classList.remove('convai-active');
+      if (isHoveringBtn || isHoveringWidget) {
+        clearTimeout(hideTimer);
+        convai.classList.add('show-convai');
+      } else {
+        hideTimer = setTimeout(() => {
+          if (!isHoveringBtn && !isHoveringWidget) {
+            convai.classList.remove('show-convai');
+          }
+        }, 220);
       }
+    };
+
+    floatingAiBtn.addEventListener('mouseenter', () => {
+      isHoveringBtn = true;
+      updateVisibility();
     });
+
+    floatingAiBtn.addEventListener('mouseleave', () => {
+      isHoveringBtn = false;
+      updateVisibility();
+    });
+
+    const bindWidgetHover = () => {
+      const convai = getConvai();
+      if (!convai) return;
+
+      convai.addEventListener('mouseenter', () => {
+        isHoveringWidget = true;
+        updateVisibility();
+      });
+
+      convai.addEventListener('mouseleave', () => {
+        isHoveringWidget = false;
+        updateVisibility();
+      });
+
+      // Hide "Powered by ElevenAgents" / "Powered by ElevenLabs" inside shadow root
+      if (convai.shadowRoot && !convai.shadowRoot.querySelector('#hide-branding-style')) {
+        const style = document.createElement('style');
+        style.id = 'hide-branding-style';
+        style.textContent = `
+          [class*="branding"],
+          [class*="powered"],
+          [class*="attribution"],
+          [class*="footer"],
+          a[href*="elevenlabs"],
+          a[href*="eleven"],
+          .branding,
+          .powered-by {
+            display: none !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            pointer-events: none !important;
+          }
+        `;
+        convai.shadowRoot.appendChild(style);
+      }
+    };
+
+    setInterval(bindWidgetHover, 500);
   }
 });
 

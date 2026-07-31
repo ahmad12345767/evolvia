@@ -1329,6 +1329,22 @@ textarea.input-field {
   transform: translateY(-50%) translateX(0);
 }
 
+/* ElevenLabs ConvAI White Icon & Text Overrides */
+elevenlabs-convai {
+  --elevenlabs-base-primary: #ffffff !important;
+  --elevenlabs-accent-primary: #ffffff !important;
+}
+
+elevenlabs-convai button svg,
+elevenlabs-convai button path,
+elevenlabs-convai svg path,
+elevenlabs-convai [data-icon],
+elevenlabs-convai button {
+  fill: #ffffff !important;
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+
 /* Highlight Pulse for AI Assistant Card when navigated to */
 .ai-section-highlight {
   animation: cardHighlightPulse 2.5s cubic-bezier(0.16, 1, 0.3, 1);

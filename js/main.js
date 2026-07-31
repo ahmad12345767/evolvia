@@ -160,8 +160,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
   initSmoothScroll();
 
-  // 8. Floating AI Agent Smooth Scroll Navigation & ElevenLabs Hover Reveal
+  // 8. Floating AI Agent Smooth Scroll Navigation & ElevenLabs Hover/Active Reveal
+  const wrapper = document.getElementById('floating-ai-wrapper');
   const floatingAiBtn = document.getElementById('floating-ai-agent');
+
   if (floatingAiBtn) {
     floatingAiBtn.addEventListener('click', (e) => {
       const targetSec = document.getElementById('ai-assistant');
@@ -175,30 +177,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Hover reveal logic for ElevenLabs ConvAI widget
-    let hideTimer;
-    const updateWidgetHover = () => {
+    // Keep ConvAI active/visible when clicked or used
+    document.addEventListener('click', (e) => {
       const convai = document.querySelector('elevenlabs-convai');
       if (!convai) return;
 
-      const showWidget = () => {
-        clearTimeout(hideTimer);
-        convai.classList.add('show-convai');
-      };
-
-      const hideWidget = () => {
-        hideTimer = setTimeout(() => {
-          convai.classList.remove('show-convai');
-        }, 350);
-      };
-
-      floatingAiBtn.addEventListener('mouseenter', showWidget);
-      floatingAiBtn.addEventListener('mouseleave', hideWidget);
-      convai.addEventListener('mouseenter', showWidget);
-      convai.addEventListener('mouseleave', hideWidget);
-    };
-
-    setTimeout(updateWidgetHover, 500);
+      if (convai.contains(e.target)) {
+        convai.classList.add('convai-active');
+      } else if (wrapper && !wrapper.contains(e.target)) {
+        convai.classList.remove('convai-active');
+      }
+    });
   }
 });
 

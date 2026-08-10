@@ -1499,9 +1499,9 @@ elevenlabs-convai {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease !important;
 }
 
-.floating-ai-wrapper:hover ~ elevenlabs-convai,
+.floating-ai-wrapper:hover~elevenlabs-convai,
 #floating-ai-wrapper:hover elevenlabs-convai,
-.floating-ai-btn:hover ~ elevenlabs-convai,
+.floating-ai-btn:hover~elevenlabs-convai,
 elevenlabs-convai.show-convai,
 elevenlabs-convai:hover {
   opacity: 1 !important;
@@ -1558,10 +1558,35 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
   }
 }
 
+/* Desktop Default Rules for Mobile-Only Showcase Elements */
+.mobile-showcase-media {
+  display: none !important;
+}
+
+.desktop-showcase-video {
+  display: block !important;
+}
+
 /* Comprehensive Mobile (≤ 768px) Responsive Fixes */
 @media (max-width: 768px) {
+  /* Enforce Solid Black Background on 3 Video Showcase Sections */
+  .video-showcase-group,
+  .full-bleed-video-section,
+  .video-separator-section {
+    background: #000000 !important;
+    background-color: #000000 !important;
+  }
+
+  .glass-transition-top,
+  .glass-transition-bottom {
+    display: none !important;
+  }
+
   /* Prevent horizontal page scroll & clipping */
-  html, body, .container, .video-showcase-group {
+  html,
+  body,
+  .container,
+  .video-showcase-group {
     overflow-x: hidden !important;
     max-width: 100vw !important;
     box-sizing: border-box;
@@ -1602,29 +1627,61 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     justify-content: center;
   }
 
-  /* 2. Three Video Showcase Sections (Taller, Larger & Visually Impactful on Mobile) */
-  .full-bleed-video-section {
-    height: 58vh !important;
-    min-height: 360px !important;
-    max-height: 520px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow: hidden !important;
+  /* 2. Three Video Showcase Sections (Picture Above, Mobile Video Under It on Solid Black - Display Only, Non-Scrollable) */
+  .desktop-showcase-video {
+    display: none !important;
   }
 
-  .full-bleed-video-section video {
+  .full-bleed-video-section {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
     width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    background: #000000 !important;
+    padding: 20px 0 !important;
+  }
+
+  .mobile-showcase-media {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    width: 100% !important;
+    padding: 0 16px !important;
+    box-sizing: border-box !important;
+    background: #000000 !important;
+    overflow: visible !important;
+  }
+
+  .mobile-showcase-img {
+    width: 100% !important;
+    height: auto !important;
     display: block !important;
+    border-radius: 16px !important;
+    object-fit: contain !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: #000000 !important;
+    pointer-events: none !important;
+  }
+
+  .mobile-showcase-video {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    border-radius: 16px !important;
+    object-fit: contain !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: #000000 !important;
+    pointer-events: none !important;
   }
 
   .video-separator-section {
-    padding: 55px 16px !important;
+    padding: 45px 16px !important;
     overflow-x: hidden !important;
     width: 100% !important;
     max-width: 100vw !important;
+    background: #000000 !important;
   }
 
   .video-separator-title {

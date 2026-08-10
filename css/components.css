@@ -1206,7 +1206,26 @@
 
 @media (max-width: 768px) {
   .footer-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px 12px;
+  }
+
+  .footer-brand {
+    grid-column: span 3;
+    margin-bottom: 12px;
+  }
+
+  .footer-brand p {
+    max-width: 100%;
+  }
+
+  .footer-title {
+    font-size: 0.92rem;
+    margin-bottom: 12px;
+  }
+
+  .footer-links li a {
+    font-size: 0.84rem;
   }
 }
 
@@ -1536,5 +1555,115 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 
   100% {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+}
+
+/* Comprehensive Mobile (≤ 768px) Responsive Fixes */
+@media (max-width: 768px) {
+  /* Prevent horizontal page scroll & clipping */
+  html, body, .container, .video-showcase-group {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+  }
+
+  /* 1. Hero Section & Heading Word Wrapping */
+  .hero-section {
+    padding-top: 110px;
+    padding-bottom: 50px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.8rem, 6.5vw, 2.5rem);
+    line-height: 1.25;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* 2. Three Full-Bleed Video Showcase Sections */
+  .full-bleed-video-section {
+    height: 48vh !important;
+    min-height: 250px !important;
+    max-height: 420px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .full-bleed-video-section video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .video-separator-section {
+    padding: 50px 16px !important;
+  }
+
+  .video-separator-title {
+    font-size: clamp(1.35rem, 5vw, 1.9rem) !important;
+    line-height: 1.3 !important;
+  }
+
+  /* 3. Single-Column Card & Process Grids */
+  .services-grid,
+  .process-grid,
+  .contact-form-grid,
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .service-card-lg,
+  .service-card-md,
+  .service-card-sm,
+  .service-card-full,
+  .process-card,
+  .form-group-full {
+    grid-column: span 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  .case-card {
+    flex: 0 0 calc(100% - 24px) !important;
+    max-width: 100% !important;
+  }
+
+  .widget-box {
+    padding: 14px;
+    overflow-x: hidden;
+  }
+
+  .task-item {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .task-name {
+    word-break: break-word;
   }
 }

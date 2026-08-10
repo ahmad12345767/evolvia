@@ -124,6 +124,11 @@ html.lenis, html.lenis body {
   }
 }
 
+.word-span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .char-span {
   display: inline-block;
   opacity: 0;

@@ -22,20 +22,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const bgVideo = document.querySelector('.video-bg-video');
   const heroItems = document.querySelectorAll('.hero-animate-item');
 
-  // Function to split text nodes into character spans for MagicUI blurInUp effect
+  // Function to split text nodes into character spans grouped by words (prevents mid-word line splits)
   function splitTextToChars(element) {
     if (!element) return;
     const processNode = (node) => {
       if (node.nodeType === Node.TEXT_NODE) {
         const text = node.textContent;
+        // Split text keeping whitespace tokens intact
+        const tokens = text.split(/(\s+)/);
         const fragment = document.createDocumentFragment();
-        for (let i = 0; i < text.length; i++) {
-          const char = text[i];
-          const span = document.createElement('span');
-          span.className = 'char-span';
-          span.textContent = char;
-          fragment.appendChild(span);
-        }
+
+        tokens.forEach((token) => {
+          if (/^\s+$/.test(token)) {
+            fragment.appendChild(document.createTextNode(token));
+          } else if (token.length > 0) {
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'word-span';
+            for (let i = 0; i < token.length; i++) {
+              const span = document.createElement('span');
+              span.className = 'char-span';
+              span.textContent = token[i];
+              wordSpan.appendChild(span);
+            }
+            fragment.appendChild(wordSpan);
+          }
+        });
         node.parentNode.replaceChild(fragment, node);
       } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName !== 'SCRIPT') {
         Array.from(node.childNodes).forEach(processNode);

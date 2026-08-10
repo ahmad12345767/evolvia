@@ -99,11 +99,34 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. Mobile Navigation Drawer
   const mobileToggle = document.querySelector('.mobile-nav-toggle');
   const navMenu = document.querySelector('.nav-menu');
+  const navbarHeader = document.querySelector('.navbar-header');
 
   if (mobileToggle && navMenu) {
-    mobileToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-      mobileToggle.textContent = navMenu.classList.contains('active') ? '✕' : '☰';
+    const closeMobileMenu = () => {
+      navMenu.classList.remove('active');
+      mobileToggle.textContent = '☰';
+      mobileToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    mobileToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isActive = navMenu.classList.toggle('active');
+      mobileToggle.textContent = isActive ? '✕' : '☰';
+      mobileToggle.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    });
+
+    // Close menu when a link inside the nav menu is clicked
+    navMenu.querySelectorAll('.nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        closeMobileMenu();
+      });
+    });
+
+    // Close menu when clicking outside header
+    document.addEventListener('click', (e) => {
+      if (navbarHeader && !navbarHeader.contains(e.target) && navMenu.classList.contains('active')) {
+        closeMobileMenu();
+      }
     });
   }
 

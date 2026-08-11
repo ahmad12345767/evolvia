@@ -10,17 +10,22 @@
   <link rel="alternate icon" type="image/svg+xml" href="images/logo.svg">
   <link rel="apple-touch-icon" href="images/favicon.svg">
 
+  <!-- Preconnect Domains for Fast Mobile Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/components.css">
 
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.9/dist/lenis.min.js" defer></script>
 </head>
 <body>
 
   <!-- Seamless Background Video -->
   <div class="video-bg-container">
-    <video class="video-bg-video" autoplay loop muted playsinline disablePictureInPicture preload="auto">
+    <video class="video-bg-video" autoplay loop muted playsinline webkit-playsinline disablePictureInPicture preload="metadata">
       <source src="webssite%20background%20vid/Screen%20Recording%202026-07-27%20at%2021.00.26.mov" type="video/quicktime">
       <source src="webssite background vid/Screen Recording 2026-07-27 at 21.00.26.mov">
     </video>

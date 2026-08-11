@@ -82,6 +82,18 @@ body {
   object-fit: cover;
   opacity: 1;
   filter: none;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Off-screen Section Performance Optimization for Mobile Devices */
+@media (max-width: 768px) {
+  .process-section,
+  .cta-banner,
+  .footer-main {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 500px;
+  }
 }
 
 .video-bg-overlay {

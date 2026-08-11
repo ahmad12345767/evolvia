@@ -66,21 +66,36 @@ document.addEventListener('DOMContentLoaded', () => {
   animateCharTitles.forEach((el) => splitTextToChars(el));
 
   if (bgVideo) {
+    const isMobile = window.innerWidth <= 992 || 'ontouchstart' in window;
     bgVideo.playbackRate = 1.0;
-    
-    // After 1s: speed up video to 2.0x for 2 seconds
-    setTimeout(() => {
-      bgVideo.playbackRate = 2.0;
-      
-      // After 2 seconds (at 3s total): return back to normal 1.0x speed
+
+    // Only accelerate video rate on desktop to avoid mobile GPU stuttering/freezing
+    if (!isMobile) {
       setTimeout(() => {
-        bgVideo.playbackRate = 1.0;
-      }, 2000);
-    }, 1000);
+        bgVideo.playbackRate = 1.8;
+        setTimeout(() => {
+          bgVideo.playbackRate = 1.0;
+        }, 1800);
+      }, 600);
+    }
+
+    // Ensure seamless autoplay on mobile devices
+    const playPromise = bgVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        const startVideo = () => {
+          bgVideo.play();
+          document.removeEventListener('touchstart', startVideo);
+          document.removeEventListener('click', startVideo);
+        };
+        document.addEventListener('touchstart', startVideo, { passive: true });
+        document.addEventListener('click', startVideo, { passive: true });
+      });
+    }
   }
 
-  // After 3s: trigger character-by-character blurInUp fade-in
-  setTimeout(() => {
+  // Trigger hero text animations after 1 second (1000ms)
+  const triggerHeroText = () => {
     heroItems.forEach((item) => {
       item.classList.add('hero-animated');
     });
@@ -89,7 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
     allCharSpans.forEach((span) => {
       span.classList.add('animate-char');
     });
-  }, 3000);
+  };
+
+  setTimeout(triggerHeroText, 1000);
 
   // 2. FAQ Accordion Toggle
   const accordionItems = document.querySelectorAll('.accordion-item');

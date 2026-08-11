@@ -61,9 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Split hero titles/subtitles into character spans
-  const animateCharTitles = document.querySelectorAll('.text-animate-chars');
-  animateCharTitles.forEach((el) => splitTextToChars(el));
+  // Split hero titles/subtitles into character spans (Desktop only to prevent mobile main-thread CPU blocking)
+  const isMobileDevice = window.innerWidth <= 992 || 'ontouchstart' in window;
+  if (!isMobileDevice) {
+    const animateCharTitles = document.querySelectorAll('.text-animate-chars');
+    animateCharTitles.forEach((el) => splitTextToChars(el));
+  }
 
   if (bgVideo) {
     const isMobile = window.innerWidth <= 992 || 'ontouchstart' in window;
@@ -94,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Trigger hero text animations after 1 second (1000ms)
+  // Trigger hero text animations (Fast on mobile for <1.2s LCP; 1s on desktop)
   const triggerHeroText = () => {
     heroItems.forEach((item) => {
       item.classList.add('hero-animated');
@@ -106,7 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  setTimeout(triggerHeroText, 1000);
+  const animDelay = isMobileDevice ? 80 : 1000;
+  setTimeout(triggerHeroText, animDelay);
 
   // 2. FAQ Accordion Toggle
   const accordionItems = document.querySelectorAll('.accordion-item');
@@ -412,6 +416,9 @@ function initMagicTextReveal() {
 
 // Lenis & Framer Ultra-Smooth Heavy Weighted Inertia Scroll Implementation
 function initSmoothScroll() {
+  const isTouchMobile = window.innerWidth <= 992 || ('ontouchstart' in window && window.innerWidth < 1024);
+  if (isTouchMobile) return; // Allow mobile OS native 120Hz smooth scrolling without JS input latency
+
   if (typeof Lenis !== 'undefined') {
     const lenis = new Lenis({
       duration: 1.8,          // Heavy luxury damping (1.8s momentum decay)

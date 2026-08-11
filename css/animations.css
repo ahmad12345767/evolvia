@@ -150,6 +150,17 @@ html.lenis, html.lenis body {
   animation: heroPopFadeIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Mobile High Performance Overrides: Instant Paint & Zero Main-Thread CPU Latency */
+@media (max-width: 992px) {
+  .hero-animate-item,
+  .char-span {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
 .hero-delay-1 { animation-delay: 0s; }
 .hero-delay-2 { animation-delay: 0.2s; }
 .hero-delay-3 { animation-delay: 0.4s; }

@@ -346,8 +346,8 @@
   font-size: clamp(2.2rem, 4.2vw, 3.6rem);
   font-weight: 800;
   line-height: 1.18;
-  margin-bottom: -12px;
-  transform: translateY(32px);
+  margin-bottom: 24px;
+  transform: none;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
@@ -358,12 +358,12 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(0.95rem, 1.4vw, 1.12rem);
+  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
   color: var(--text-secondary);
-  max-width: 620px;
-  margin: 0 auto 32px auto;
+  max-width: 540px;
+  margin: 28px auto 48px auto;
   text-align: center;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .hero-actions {
@@ -1716,9 +1716,12 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
   .services-grid,
   .process-grid,
   .contact-form-grid,
-  .testimonials-grid {
+  .testimonials-grid,
+  .about-stats-grid,
+  .about-values-grid,
+  .about-team-grid {
     grid-template-columns: 1fr !important;
-    gap: 24px !important;
+    gap: 20px !important;
   }
 
   .service-card-lg,
@@ -1894,5 +1897,237 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 @media (max-width: 768px) {
   .mobile-secsec-block {
     display: block !important;
+  }
+}
+
+/* ==========================================================================
+   About Page Custom Layouts & Squared Responsive Glass Cards
+   ========================================================================== */
+
+/* 1. Stats Grid */
+.about-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+  width: 100%;
+}
+
+.about-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 36px 24px;
+  min-height: 200px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(223, 122, 254, 0.03);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.about-stat-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(223, 122, 254, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(223, 122, 254, 0.2);
+}
+
+.stat-number {
+  font-size: clamp(2.4rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1;
+  font-family: var(--font-mono);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.stat-desc {
+  font-size: clamp(0.88rem, 1.1vw, 0.98rem);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 280px;
+}
+
+/* 2. Values Grid */
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.about-value-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px 30px;
+  min-height: 220px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.about-value-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(223, 122, 254, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(223, 122, 254, 0.15);
+}
+
+.value-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(223, 122, 254, 0.1);
+  border: 1px solid rgba(223, 122, 254, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.value-title {
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.value-desc {
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* 3. Team Grid */
+.about-team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+.about-team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 36px 24px;
+  min-height: 240px;
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.about-team-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(223, 122, 254, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(223, 122, 254, 0.2);
+}
+
+.team-avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(18, 14, 28, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(223, 122, 254, 0.35);
+  box-shadow: inset 0 0 15px rgba(223, 122, 254, 0.08), 0 8px 24px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #df7afe;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+  transition: all 0.35s ease;
+}
+
+.about-team-card:hover .team-avatar {
+  background: rgba(223, 122, 254, 0.12);
+  border-color: rgba(223, 122, 254, 0.65);
+  box-shadow: inset 0 0 20px rgba(223, 122, 254, 0.2), 0 0 25px rgba(223, 122, 254, 0.3);
+  transform: scale(1.06);
+  color: #ffffff;
+}
+
+.team-name {
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+
+.team-role {
+  font-size: clamp(0.85rem, 1vw, 0.92rem);
+  color: #df7afe;
+  font-weight: 500;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Mobile Responsiveness: Stacking cards vertically (one above the other) & Squared Layout */
+@media (max-width: 768px) {
+  .about-stats-grid,
+  .about-values-grid,
+  .about-team-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    margin-top: 28px !important;
+  }
+
+  .about-stat-card,
+  .about-value-card,
+  .about-team-card {
+    min-height: auto !important;
+    padding: 24px 20px !important;
+    border-radius: 18px !important;
+  }
+
+  .stat-number {
+    font-size: 2.6rem !important;
+  }
+
+  .value-title {
+    font-size: 1.2rem !important;
+  }
+
+  .team-avatar {
+    width: 68px !important;
+    height: 68px !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 14px !important;
+  }
+
+  .team-name {
+    font-size: 1.25rem !important;
+    white-space: normal !important;
+  }
+
+  .team-role {
+    font-size: 0.88rem !important;
   }
 }

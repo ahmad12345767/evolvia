@@ -68,47 +68,61 @@ document.addEventListener('DOMContentLoaded', () => {
     animateCharTitles.forEach((el) => splitTextToChars(el));
   }
 
-  // Mobile High-Performance Video Engine: Post-Paint Async Video Streaming
-  const allVideos = document.querySelectorAll('video');
-  const isMobileScreen = window.innerWidth <= 768 || 'ontouchstart' in window;
-
-  if (isMobileScreen) {
-    // Set preload="none" initially so mobile 4G network paints hero immediately (< 0.8s LCP!)
-    allVideos.forEach((v) => {
-      v.setAttribute('preload', 'none');
-    });
-
-    const loadVideosPostPaint = () => {
-      allVideos.forEach((v) => {
-        v.setAttribute('preload', 'metadata');
-        const playPromise = v.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            const startVideo = () => {
-              v.play();
-              document.removeEventListener('touchstart', startVideo);
-              document.removeEventListener('click', startVideo);
-            };
-            document.addEventListener('touchstart', startVideo, { passive: true });
-            document.addEventListener('click', startVideo, { passive: true });
-          });
+  // Smart Video Hydrator: Hydrates data-src attributes post-paint & on scroll
+  const initSmartVideoHydration = () => {
+    // 1. Background & Hero Videos - Hydrate immediately post-paint
+    const priorityVideos = document.querySelectorAll('.video-bg-video, .trust-badge-video');
+    priorityVideos.forEach((video) => {
+      const sources = video.querySelectorAll('source[data-src]');
+      sources.forEach((s) => {
+        if (s.dataset.src && !s.src) {
+          s.src = s.dataset.src;
         }
       });
-    };
+      if (video.dataset.src && !video.src) {
+        video.src = video.dataset.src;
+      }
+      video.load();
+      const p = video.play();
+      if (p !== undefined) p.catch(() => {});
+    });
 
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadVideosPostPaint, { timeout: 1200 });
+    // 2. Off-screen Showcase & Section Videos - Lazy hydrate via IntersectionObserver
+    const lazyVideos = document.querySelectorAll('video:not(.video-bg-video):not(.trust-badge-video)');
+    
+    if ('IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const video = entry.target;
+            const sources = video.querySelectorAll('source[data-src]');
+            sources.forEach((s) => {
+              if (s.dataset.src && !s.src) s.src = s.dataset.src;
+            });
+            if (video.dataset.src && !video.src) video.src = video.dataset.src;
+            video.load();
+            const p = video.play();
+            if (p !== undefined) p.catch(() => {});
+            observer.unobserve(video);
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+
+      lazyVideos.forEach((v) => videoObserver.observe(v));
     } else {
-      setTimeout(loadVideosPostPaint, 600);
+      lazyVideos.forEach((v) => {
+        const sources = v.querySelectorAll('source[data-src]');
+        sources.forEach((s) => { if (s.dataset.src && !s.src) s.src = s.dataset.src; });
+        if (v.dataset.src && !v.src) v.src = v.dataset.src;
+        v.load();
+      });
     }
-  } else if (bgVideo) {
-    bgVideo.playbackRate = 1.0;
-    setTimeout(() => {
-      bgVideo.playbackRate = 1.8;
-      setTimeout(() => {
-        bgVideo.playbackRate = 1.0;
-      }, 1800);
-    }, 600);
+  };
+
+  if (document.readyState === 'complete') {
+    setTimeout(initSmartVideoHydration, 100);
+  } else {
+    window.addEventListener('load', () => setTimeout(initSmartVideoHydration, 100));
   }
 
   // Trigger hero text animations (Fast on mobile for <1.2s LCP; 1s on desktop)

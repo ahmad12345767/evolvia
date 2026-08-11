@@ -74,32 +74,11 @@
 
   <section class="services-section">
     <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 40px;">
+      <div class="contact-main-grid">
         
-        <!-- Contact Direct Info -->
+        <!-- Contact Form (Message Box ON TOP) -->
         <div class="glass-card reveal">
-          <h3 style="font-size: 1.5rem; margin-bottom: 24px;">Direct Contact</h3>
-          
-          <div style="margin-bottom: 24px;">
-            <div style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase;">E-mail</div>
-            <a href="mailto:jamhmad51@gmail.com" style="font-size: 1.1rem; font-weight: 600; color: #df7afe;">jamhmad51@gmail.com</a>
-          </div>
-
-          <div style="margin-bottom: 24px;">
-            <div style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); text-transform: uppercase;">Phone</div>
-            <a href="tel:+972584040446" style="font-size: 1.1rem; font-weight: 600; color: #df7afe;">+972-584040446</a>
-          </div>
-
-          <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border-glass);">
-            <div style="font-size: 0.9rem; color: var(--text-secondary);">
-              📍 EVOLVIA Agency HQ<br>
-              Automate Smarter, Optimize Faster, and Grow Stronger.
-            </div>
-          </div>
-        </div>
-
-        <!-- Contact Form -->
-        <div class="glass-card reveal reveal-delay-1">
+          <h3 style="font-size: 1.5rem; margin-bottom: 24px; color: #ffffff;">Send Us a Message</h3>
           <form class="contact-form-grid" action="https://formsubmit.co/jamhmad51@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="EVOLVIA CONTACT">
             <input type="hidden" name="_captcha" value="false">
@@ -131,6 +110,30 @@
               </button>
             </div>
           </form>
+        </div>
+
+        <!-- Contact Direct Info (UNDER Message Box) -->
+        <div class="glass-card reveal reveal-delay-1">
+          <h3 style="font-size: 1.4rem; margin-bottom: 20px; color: #ffffff;">Direct Contact Details</h3>
+          
+          <div class="contact-info-items">
+            <div class="contact-info-item">
+              <div class="contact-info-label">E-mail</div>
+              <a href="mailto:jamhmad51@gmail.com" class="contact-info-value">jamhmad51@gmail.com</a>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-label">Phone</div>
+              <a href="tel:+972584040446" class="contact-info-value">+972-584040446</a>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="contact-info-label">EVOLVIA HQ</div>
+              <div class="contact-info-desc">
+                📍 Automate Smarter, Optimize Faster, and Grow Stronger.
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>

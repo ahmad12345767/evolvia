@@ -2270,3 +2270,63 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     padding: 22px 18px !important;
   }
 }
+
+/* ==========================================================================
+   Contact Page Layout (Form on Top, Direct Info Box Underneath)
+   ========================================================================== */
+.contact-main-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 840px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.contact-info-items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.contact-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-info-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.contact-info-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #df7afe;
+  word-break: break-word;
+}
+
+.contact-info-value:hover {
+  color: #ffffff;
+}
+
+.contact-info-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .contact-main-grid {
+    gap: 20px !important;
+  }
+
+  .contact-info-items {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+}

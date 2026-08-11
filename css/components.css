@@ -2088,6 +2088,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 
 /* Mobile Responsiveness: Stacking cards vertically (one above the other) & Squared Layout */
 @media (max-width: 768px) {
+
   .about-stats-grid,
   .about-values-grid,
   .about-team-grid {

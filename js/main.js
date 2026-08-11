@@ -194,11 +194,53 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
   initSmoothScroll();
 
-  // 8. Floating AI Agent Smooth Scroll Navigation & ElevenLabs Hover/Hold Logic
+  // 8. Floating AI Agent Smooth Scroll Navigation & 2-Second Inactivity Auto-Disappear Logic
   const wrapper = document.getElementById('floating-ai-wrapper');
   const floatingAiBtn = document.getElementById('floating-ai-agent');
 
   if (floatingAiBtn) {
+    let autoDisappearTimer = null;
+    let isUserActive = false;
+
+    const getConvai = () => document.querySelector('elevenlabs-convai');
+
+    const startInactivityCountdown = () => {
+      clearTimeout(autoDisappearTimer);
+      autoDisappearTimer = setTimeout(() => {
+        if (!isUserActive) {
+          const convai = getConvai();
+          if (convai) {
+            convai.classList.remove('show-convai');
+          }
+          if (wrapper) {
+            wrapper.classList.remove('active-evie');
+          }
+        }
+      }, 2000); // 2 Seconds Auto-Disappear if unused
+    };
+
+    const activateEvie = () => {
+      const convai = getConvai();
+      if (convai) {
+        convai.classList.add('show-convai');
+      }
+      if (wrapper) {
+        wrapper.classList.add('active-evie');
+      }
+      isUserActive = false;
+      startInactivityCountdown();
+    };
+
+    const resetUserActivity = () => {
+      isUserActive = true;
+      clearTimeout(autoDisappearTimer);
+    };
+
+    const handleUserLeave = () => {
+      isUserActive = false;
+      startInactivityCountdown();
+    };
+
     floatingAiBtn.addEventListener('click', (e) => {
       const targetSec = document.getElementById('ai-assistant');
       if (targetSec) {
@@ -206,56 +248,34 @@ document.addEventListener('DOMContentLoaded', () => {
         targetSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
         targetSec.classList.add('ai-section-highlight');
         setTimeout(() => targetSec.classList.remove('ai-section-highlight'), 2500);
-      } else {
-        window.location.href = 'index.html#ai-assistant';
       }
+      activateEvie();
     });
-
-    let hideTimer;
-    let isHoveringBtn = false;
-    let isHoveringWidget = false;
-
-    const getConvai = () => document.querySelector('elevenlabs-convai');
-
-    const updateVisibility = () => {
-      const convai = getConvai();
-      if (!convai) return;
-
-      if (isHoveringBtn || isHoveringWidget) {
-        clearTimeout(hideTimer);
-        convai.classList.add('show-convai');
-      } else {
-        hideTimer = setTimeout(() => {
-          if (!isHoveringBtn && !isHoveringWidget) {
-            convai.classList.remove('show-convai');
-          }
-        }, 220);
-      }
-    };
 
     floatingAiBtn.addEventListener('mouseenter', () => {
-      isHoveringBtn = true;
-      updateVisibility();
+      resetUserActivity();
+      activateEvie();
     });
 
-    floatingAiBtn.addEventListener('mouseleave', () => {
-      isHoveringBtn = false;
-      updateVisibility();
-    });
+    floatingAiBtn.addEventListener('mouseleave', handleUserLeave);
+
+    if (wrapper) {
+      wrapper.addEventListener('mousemove', resetUserActivity);
+      wrapper.addEventListener('mouseenter', resetUserActivity);
+      wrapper.addEventListener('mouseleave', handleUserLeave);
+    }
 
     const bindWidgetHover = () => {
       const convai = getConvai();
       if (!convai) return;
 
-      convai.addEventListener('mouseenter', () => {
-        isHoveringWidget = true;
-        updateVisibility();
-      });
-
-      convai.addEventListener('mouseleave', () => {
-        isHoveringWidget = false;
-        updateVisibility();
-      });
+      if (!convai.dataset.evieBound) {
+        convai.dataset.evieBound = 'true';
+        convai.addEventListener('mouseenter', resetUserActivity);
+        convai.addEventListener('mousemove', resetUserActivity);
+        convai.addEventListener('click', resetUserActivity);
+        convai.addEventListener('mouseleave', handleUserLeave);
+      }
 
       // Hide "Powered by ElevenAgents" / "Powered by ElevenLabs" inside shadow root
       if (convai.shadowRoot && !convai.shadowRoot.querySelector('#hide-branding-style')) {

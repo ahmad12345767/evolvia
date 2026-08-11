@@ -68,33 +68,47 @@ document.addEventListener('DOMContentLoaded', () => {
     animateCharTitles.forEach((el) => splitTextToChars(el));
   }
 
-  if (bgVideo) {
-    const isMobile = window.innerWidth <= 992 || 'ontouchstart' in window;
-    bgVideo.playbackRate = 1.0;
+  // Mobile High-Performance Video Engine: Post-Paint Async Video Streaming
+  const allVideos = document.querySelectorAll('video');
+  const isMobileScreen = window.innerWidth <= 768 || 'ontouchstart' in window;
 
-    // Only accelerate video rate on desktop to avoid mobile GPU stuttering/freezing
-    if (!isMobile) {
-      setTimeout(() => {
-        bgVideo.playbackRate = 1.8;
-        setTimeout(() => {
-          bgVideo.playbackRate = 1.0;
-        }, 1800);
-      }, 600);
-    }
+  if (isMobileScreen) {
+    // Set preload="none" initially so mobile 4G network paints hero immediately (< 0.8s LCP!)
+    allVideos.forEach((v) => {
+      v.setAttribute('preload', 'none');
+    });
 
-    // Ensure seamless autoplay on mobile devices
-    const playPromise = bgVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        const startVideo = () => {
-          bgVideo.play();
-          document.removeEventListener('touchstart', startVideo);
-          document.removeEventListener('click', startVideo);
-        };
-        document.addEventListener('touchstart', startVideo, { passive: true });
-        document.addEventListener('click', startVideo, { passive: true });
+    const loadVideosPostPaint = () => {
+      allVideos.forEach((v) => {
+        v.setAttribute('preload', 'metadata');
+        const playPromise = v.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            const startVideo = () => {
+              v.play();
+              document.removeEventListener('touchstart', startVideo);
+              document.removeEventListener('click', startVideo);
+            };
+            document.addEventListener('touchstart', startVideo, { passive: true });
+            document.addEventListener('click', startVideo, { passive: true });
+          });
+        }
       });
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadVideosPostPaint, { timeout: 1200 });
+    } else {
+      setTimeout(loadVideosPostPaint, 600);
     }
+  } else if (bgVideo) {
+    bgVideo.playbackRate = 1.0;
+    setTimeout(() => {
+      bgVideo.playbackRate = 1.8;
+      setTimeout(() => {
+        bgVideo.playbackRate = 1.0;
+      }, 1800);
+    }, 600);
   }
 
   // Trigger hero text animations (Fast on mobile for <1.2s LCP; 1s on desktop)

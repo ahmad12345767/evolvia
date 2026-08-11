@@ -1514,11 +1514,7 @@ elevenlabs-convai {
   transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease !important;
 }
 
-.floating-ai-wrapper:hover~elevenlabs-convai,
-#floating-ai-wrapper:hover elevenlabs-convai,
-.floating-ai-btn:hover~elevenlabs-convai,
-elevenlabs-convai.show-convai,
-elevenlabs-convai:hover {
+elevenlabs-convai.show-convai {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;

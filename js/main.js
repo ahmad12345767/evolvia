@@ -194,90 +194,101 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Lenis & Framer Ultra-Smooth Weighted Inertia Scroll
   initSmoothScroll();
 
-  // 8. Floating AI Agent Smooth Scroll Navigation & 2-Second Inactivity Auto-Disappear Logic
+  // 8. Floating ElevenLabs ConvAI Agent - 1.5 Second Auto-Disappear Timer
   const wrapper = document.getElementById('floating-ai-wrapper');
   const floatingAiBtn = document.getElementById('floating-ai-agent');
 
-  if (floatingAiBtn) {
-    let autoDisappearTimer = null;
-    let isUserActive = false;
+  if (floatingAiBtn || wrapper) {
+    let disappearTimer = null;
+    let isWidgetActiveInUse = false;
 
     const getConvai = () => document.querySelector('elevenlabs-convai');
 
-    const startInactivityCountdown = () => {
-      clearTimeout(autoDisappearTimer);
-      autoDisappearTimer = setTimeout(() => {
-        if (!isUserActive) {
-          const convai = getConvai();
-          if (convai) {
-            convai.classList.remove('show-convai');
-          }
-          if (wrapper) {
-            wrapper.classList.remove('active-evie');
-          }
-        }
-      }, 2000); // 2 Seconds Auto-Disappear if unused
+    const hideElevenLabsAgent = () => {
+      if (!isWidgetActiveInUse) {
+        const convai = getConvai();
+        if (convai) convai.classList.remove('show-convai');
+        if (wrapper) wrapper.classList.remove('active-evie');
+      }
     };
 
-    const activateEvie = () => {
+    const start15sCountdown = () => {
+      clearTimeout(disappearTimer);
+      disappearTimer = setTimeout(() => {
+        hideElevenLabsAgent();
+      }, 1500); // 1.5 Seconds Auto-Disappear if not actively used
+    };
+
+    const revealElevenLabsAgent = () => {
       const convai = getConvai();
-      if (convai) {
-        convai.classList.add('show-convai');
+      if (convai) convai.classList.add('show-convai');
+      if (wrapper) wrapper.classList.add('active-evie');
+
+      // Start 1.5s timer immediately upon hover or click if not in active use
+      if (!isWidgetActiveInUse) {
+        start15sCountdown();
       }
-      if (wrapper) {
-        wrapper.classList.add('active-evie');
-      }
-      isUserActive = false;
-      startInactivityCountdown();
     };
 
-    const resetUserActivity = () => {
-      isUserActive = true;
-      clearTimeout(autoDisappearTimer);
-    };
+    if (floatingAiBtn) {
+      floatingAiBtn.addEventListener('click', (e) => {
+        const targetSec = document.getElementById('ai-assistant');
+        if (targetSec) {
+          e.preventDefault();
+          targetSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetSec.classList.add('ai-section-highlight');
+          setTimeout(() => targetSec.classList.remove('ai-section-highlight'), 2500);
+        }
+        revealElevenLabsAgent();
+      });
 
-    const handleUserLeave = () => {
-      isUserActive = false;
-      startInactivityCountdown();
-    };
+      floatingAiBtn.addEventListener('mouseenter', () => {
+        revealElevenLabsAgent();
+      });
 
-    floatingAiBtn.addEventListener('click', (e) => {
-      const targetSec = document.getElementById('ai-assistant');
-      if (targetSec) {
-        e.preventDefault();
-        targetSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        targetSec.classList.add('ai-section-highlight');
-        setTimeout(() => targetSec.classList.remove('ai-section-highlight'), 2500);
-      }
-      activateEvie();
-    });
-
-    floatingAiBtn.addEventListener('mouseenter', () => {
-      resetUserActivity();
-      activateEvie();
-    });
-
-    floatingAiBtn.addEventListener('mouseleave', handleUserLeave);
-
-    if (wrapper) {
-      wrapper.addEventListener('mousemove', resetUserActivity);
-      wrapper.addEventListener('mouseenter', resetUserActivity);
-      wrapper.addEventListener('mouseleave', handleUserLeave);
+      floatingAiBtn.addEventListener('mouseleave', () => {
+        if (!isWidgetActiveInUse) {
+          start15sCountdown();
+        }
+      });
     }
 
-    const bindWidgetHover = () => {
+    if (wrapper) {
+      wrapper.addEventListener('mouseenter', () => {
+        revealElevenLabsAgent();
+      });
+      wrapper.addEventListener('mouseleave', () => {
+        if (!isWidgetActiveInUse) {
+          start15sCountdown();
+        }
+      });
+    }
+
+    const bindElevenLabsWidget = () => {
       const convai = getConvai();
       if (!convai) return;
 
       if (!convai.dataset.evieBound) {
         convai.dataset.evieBound = 'true';
-        convai.addEventListener('mouseenter', resetUserActivity);
-        convai.addEventListener('mousemove', resetUserActivity);
-        convai.addEventListener('click', resetUserActivity);
-        convai.addEventListener('mouseleave', handleUserLeave);
+
+        // Hover or click inside convai widget triggers reveal & countdown
+        convai.addEventListener('mouseenter', () => {
+          revealElevenLabsAgent();
+        });
+
+        // Clicking inside convai indicates user is actively interacting/talking to the ElevenLabs agent
+        convai.addEventListener('click', () => {
+          isWidgetActiveInUse = true;
+          clearTimeout(disappearTimer);
+        });
+
+        convai.addEventListener('mouseleave', () => {
+          isWidgetActiveInUse = false;
+          start15sCountdown();
+        });
       }
 
-      // Hide "Powered by ElevenAgents" / "Powered by ElevenLabs" inside shadow root
+      // Hide "Powered by ElevenAgents" / "Powered by ElevenLabs" branding inside shadow root
       if (convai.shadowRoot && !convai.shadowRoot.querySelector('#hide-branding-style')) {
         const style = document.createElement('style');
         style.id = 'hide-branding-style';
@@ -303,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    setInterval(bindWidgetHover, 500);
+    setInterval(bindElevenLabsWidget, 500);
   }
 });
 

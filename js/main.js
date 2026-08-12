@@ -54,11 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     Array.from(element.childNodes).forEach(processNode);
 
-    // Index all char spans
-    const chars = element.querySelectorAll('.char-span');
-    chars.forEach((c, idx) => {
-      c.style.setProperty('--char-index', idx);
-    });
+    // Index all char spans independently for responsive sub-wrappers
+    const subWrappers = element.querySelectorAll('.hero-subtitle-desktop, .hero-subtitle-mobile');
+    if (subWrappers.length > 0) {
+      subWrappers.forEach((sub) => {
+        const chars = sub.querySelectorAll('.char-span');
+        chars.forEach((c, idx) => c.style.setProperty('--char-index', idx));
+      });
+    } else {
+      const chars = element.querySelectorAll('.char-span');
+      chars.forEach((c, idx) => c.style.setProperty('--char-index', idx));
+    }
   }
 
   // Split hero titles/subtitles into character spans for character animation

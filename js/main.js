@@ -116,8 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', () => setTimeout(initSmartVideoHydration, 100));
   }
 
-  // Trigger hero text animations (Fast on mobile for <1.2s LCP; 1s on desktop)
+  // Event-driven Hero Text Animation: Wait until background video is playing before displaying text
+  let heroTextTriggered = false;
   const triggerHeroText = () => {
+    if (heroTextTriggered) return;
+    heroTextTriggered = true;
+
     heroItems.forEach((item) => {
       item.classList.add('hero-animated');
     });
@@ -128,8 +132,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  const animDelay = isMobileDevice ? 150 : 1000;
-  setTimeout(triggerHeroText, animDelay);
+  if (bgVideo) {
+    if (bgVideo.currentTime > 0 && !bgVideo.paused && !bgVideo.ended && bgVideo.readyState > 2) {
+      triggerHeroText();
+    } else {
+      bgVideo.addEventListener('playing', triggerHeroText, { once: true });
+      bgVideo.addEventListener('canplay', triggerHeroText, { once: true });
+      bgVideo.addEventListener('loadeddata', triggerHeroText, { once: true });
+      
+      // Fallback safety timer (1.2s max) in case video autoplay is restricted
+      setTimeout(triggerHeroText, 1200);
+    }
+
+    // Explicitly play background video
+    const p = bgVideo.play();
+    if (p !== undefined) p.catch(() => { triggerHeroText(); });
+  } else {
+    triggerHeroText();
+  }
 
   // 2. FAQ Accordion Toggle
   const accordionItems = document.querySelectorAll('.accordion-item');

@@ -599,17 +599,36 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
 }
 
 .task-item {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-xs);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   transition: all 0.25s ease;
+}
+
+.schedule-scroll-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.schedule-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .task-item:hover {
@@ -772,21 +791,30 @@
 }
 
 .chat-prompts {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  padding-top: 8px;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  gap: 8px !important;
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+  scroll-snap-type: x mandatory !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-x pan-y !important;
 }
 
 .chat-chip {
-  padding: 6px 12px;
-  border-radius: var(--radius-full);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-glass);
-  color: var(--text-secondary);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+  scroll-snap-align: start !important;
+  padding: 7px 14px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--border-glass) !important;
+  color: var(--text-secondary) !important;
+  font-size: 0.82rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
 }
 
 .chat-chip:hover {
@@ -927,10 +955,19 @@
   padding: 100px 0;
 }
 
+.comparison-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+}
+
 .comparison-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 32px;
+  table-layout: auto;
 }
 
 .comparison-table th,
@@ -1745,13 +1782,27 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     overflow: hidden !important;
   }
 
+  .task-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
   .task-item {
-    padding: 10px 12px;
-    font-size: 0.85rem;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 10px 12px !important;
+    font-size: 0.85rem !important;
   }
 
   .task-name {
-    word-break: break-word;
+    word-break: break-word !important;
+    white-space: normal !important;
+  }
+
+  .schedule-chip {
+    flex: 1 1 100% !important;
   }
 
   /* 4. Evie AI Assistant Mobile Optimization: Compact/Squared Footprint & Swipeable Prompt Chips */
@@ -1782,10 +1833,12 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 
   .chat-prompts {
     display: flex !important;
-    flex-wrap: wrap !important;
-    overflow: hidden !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
     gap: 8px !important;
     padding: 8px 0 10px 0 !important;
+    touch-action: pan-x pan-y !important;
   }
 
   .chat-chip {
@@ -1794,6 +1847,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     scroll-snap-align: start !important;
     padding: 7px 14px !important;
     font-size: 0.82rem !important;
+    border-radius: 8px !important;
   }
 
   #chat-input-form {
@@ -2203,13 +2257,17 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 /* Article Comparison Table Styling */
 .article-comparison-table-wrapper {
   width: 100%;
-  overflow: hidden;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   margin: 32px 0;
   border-radius: 16px;
   border: 1px solid rgba(223, 122, 254, 0.25);
   background: rgba(12, 10, 20, 0.7);
   backdrop-filter: blur(16px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
 }
 
 .article-comparison-table {
@@ -2241,6 +2299,37 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 
 .article-comparison-table tr:hover td {
   background: rgba(255, 255, 254, 0.03);
+}
+
+/* Responsive Comparison Table Scaling for Mobile Viewports */
+@media (max-width: 600px) {
+  .comparison-table th,
+  .comparison-table td,
+  .article-comparison-table th,
+  .article-comparison-table td {
+    padding: 12px 10px;
+    font-size: 0.85rem;
+  }
+
+  .comparison-table th,
+  .article-comparison-table th {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .comparison-table th,
+  .comparison-table td,
+  .article-comparison-table th,
+  .article-comparison-table td {
+    padding: 10px 6px;
+    font-size: 0.78rem;
+  }
+
+  .comparison-table th,
+  .article-comparison-table th {
+    font-size: 0.82rem;
+  }
 }
 
 .table-highlight-ai {

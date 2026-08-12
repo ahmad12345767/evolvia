@@ -1,7 +1,8 @@
 /* Keyframe Animations & Micro-interactions */
 
 /* Framer / Lenis Ultra-Smooth Weighted Inertia Scroll CSS */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -17,19 +18,24 @@ html.lenis, html.lenis body {
   0% {
     transform: translate(0, 0) scale(1);
   }
+
   50% {
     transform: translate(60px, 40px) scale(1.1);
   }
+
   100% {
     transform: translate(-40px, 60px) scale(0.95);
   }
 }
 
 @keyframes pulseDot {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
+
   50% {
     opacity: 0.4;
     transform: scale(0.8);
@@ -40,6 +46,7 @@ html.lenis, html.lenis body {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -49,28 +56,44 @@ html.lenis, html.lenis body {
   0% {
     transform: translateX(0%);
   }
+
   100% {
     transform: translateX(-50%);
   }
 }
 
 @keyframes pulseBorder {
-  0%, 100% {
+
+  0%,
+  100% {
     border-color: rgba(223, 122, 254, 0.2);
   }
+
   50% {
     border-color: rgba(223, 122, 254, 0.6);
   }
 }
 
 @keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes blinkCursor {
-  from, to { border-color: transparent; }
-  50% { border-color: #df7afe; }
+
+  from,
+  to {
+    border-color: transparent;
+  }
+
+  50% {
+    border-color: #df7afe;
+  }
 }
 
 /* Scroll Reveal Classes - Static & Locked in Place */
@@ -95,11 +118,13 @@ html.lenis, html.lenis body {
     transform: translateY(40px) scale(0.92);
     filter: blur(8px);
   }
+
   65% {
     opacity: 0.85;
     transform: translateY(-4px) scale(1.02);
     filter: blur(1px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -114,6 +139,7 @@ html.lenis, html.lenis body {
     filter: blur(12px);
     transform: translateY(16px) scale(0.92);
   }
+
   100% {
     opacity: 1;
     filter: blur(0);
@@ -149,11 +175,25 @@ html.lenis, html.lenis body {
 
 
 
-.hero-delay-1 { animation-delay: 0s; }
-.hero-delay-2 { animation-delay: 0.2s; }
-.hero-delay-3 { animation-delay: 0.4s; }
-.hero-delay-4 { animation-delay: 0.6s; }
-.hero-delay-5 { animation-delay: 0.8s; }
+.hero-delay-1 {
+  animation-delay: 0s;
+}
+
+.hero-delay-2 {
+  animation-delay: 0.2s;
+}
+
+.hero-delay-3 {
+  animation-delay: 0.4s;
+}
+
+.hero-delay-4 {
+  animation-delay: 0.6s;
+}
+
+.hero-delay-5 {
+  animation-delay: 0.8s;
+}
 
 /* Interactive Hover Glow Button */
 .btn-glow {
@@ -168,12 +208,10 @@ html.lenis, html.lenis body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.25),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.25),
+      transparent);
   transition: 0.5s;
 }
 
@@ -203,5 +241,3 @@ html.lenis, html.lenis body {
   -webkit-text-fill-color: transparent;
   display: inline-block;
 }
-
-

@@ -2303,6 +2303,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 
 /* Responsive Comparison Table Scaling for Mobile Viewports */
 @media (max-width: 600px) {
+
   .comparison-table th,
   .comparison-table td,
   .article-comparison-table th,
@@ -2318,6 +2319,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 }
 
 @media (max-width: 400px) {
+
   .comparison-table th,
   .comparison-table td,
   .article-comparison-table th,

@@ -61,12 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Split hero titles/subtitles into character spans (Desktop only to prevent mobile main-thread CPU blocking)
+  // Split hero titles/subtitles into character spans for character animation
   const isMobileDevice = window.innerWidth <= 992 || 'ontouchstart' in window;
-  if (!isMobileDevice) {
-    const animateCharTitles = document.querySelectorAll('.text-animate-chars');
-    animateCharTitles.forEach((el) => splitTextToChars(el));
-  }
+  const animateCharTitles = document.querySelectorAll('.text-animate-chars');
+  animateCharTitles.forEach((el) => splitTextToChars(el));
 
   // Smart Video Hydrator: Hydrates data-src attributes post-paint & on scroll
   const initSmartVideoHydration = () => {
@@ -137,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   };
 
-  const animDelay = isMobileDevice ? 80 : 1000;
+  const animDelay = isMobileDevice ? 150 : 1000;
   setTimeout(triggerHeroText, animDelay);
 
   // 2. FAQ Accordion Toggle

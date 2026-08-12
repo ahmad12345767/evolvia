@@ -366,6 +366,19 @@
   line-height: 1.6;
 }
 
+.hero-subtitle-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-subtitle-desktop {
+    display: none;
+  }
+  .hero-subtitle-mobile {
+    display: inline;
+  }
+}
+
 .hero-actions {
   display: flex;
   align-items: center;

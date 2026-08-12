@@ -10,36 +10,38 @@
   --bg-glass-hover: rgba(255, 255, 255, 0.06);
   --border-glass: rgba(255, 255, 255, 0.08);
   --border-glass-bright: rgba(255, 255, 255, 0.18);
-  
+
   --primary-purple: #814ac8;
   --primary-light-purple: #df7afe;
   --accent-purple: #a855f7;
   --gradient-primary: linear-gradient(135deg, #814ac8 0%, #df7afe 100%);
   --gradient-glow: radial-gradient(circle at 50% 50%, rgba(223, 122, 254, 0.15) 0%, rgba(129, 74, 200, 0.05) 50%, transparent 100%);
   --gradient-border: linear-gradient(135deg, rgba(223, 122, 254, 0.4) 0%, rgba(129, 74, 200, 0.1) 100%);
-  
+
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --text-muted: rgba(255, 255, 255, 0.45);
-  
+
   /* Typography */
   --font-main: 'Figtree', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'Fragment Mono', monospace;
-  
+
   /* Radii & Shadows */
   --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-full: 9999px;
-  
+
   --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --shadow-glow: 0 0 35px rgba(223, 122, 254, 0.2);
   --backdrop-blur: blur(16px);
 }
 
 /* Global Reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -89,6 +91,7 @@ body {
 
 /* Off-screen Section Performance Optimization for Mobile Devices */
 @media (max-width: 768px) {
+
   .process-section,
   .cta-banner,
   .footer-main {
@@ -150,7 +153,12 @@ body {
 }
 
 /* Typography Helpers */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--text-primary);
   font-weight: 700;
   line-height: 1.15;
@@ -253,13 +261,16 @@ a {
   width: 8px;
   height: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-dark);
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-light-purple);
 }

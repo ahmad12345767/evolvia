@@ -186,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </span>
     `;
     chatMessages.appendChild(thinkingDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
 
     const thinkingLabel = thinkingDiv.querySelector('.thinking-text');
 
@@ -214,7 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (index < words.length) {
         container.textContent += (index === 0 ? '' : ' ') + words[index];
         index++;
-        chatMessages.scrollTop = chatMessages.scrollHeight;
       } else {
         clearInterval(streamInterval);
       }
@@ -246,6 +244,5 @@ document.addEventListener('DOMContentLoaded', () => {
     msgDiv.className = `chat-msg msg-${type}`;
     msgDiv.textContent = text;
     chatMessages.appendChild(msgDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 });

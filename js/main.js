@@ -1,22 +1,9 @@
 // EVOLVIA Main JS - Scroll reveals, accordion, mobile menu, notifications
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Scroll Reveal Observer
+  // 1. Static Reveal Elements
   const revealElements = document.querySelectorAll('.reveal');
-
-  const revealOnScroll = () => {
-    const windowHeight = window.innerHeight;
-    revealElements.forEach((el) => {
-      const elementTop = el.getBoundingClientRect().top;
-      const elementVisible = 100;
-      if (elementTop < windowHeight - elementVisible) {
-        el.classList.add('active');
-      }
-    });
-  };
-
-  window.addEventListener('scroll', revealOnScroll);
-  revealOnScroll(); // Trigger initial view check
+  revealElements.forEach((el) => el.classList.add('active'));
 
   // 1b. Video Speed Controller & 3s Delayed Hero Pop & Character blurInUp Entrance
   const bgVideo = document.querySelector('.video-bg-video');
@@ -400,49 +387,11 @@ function initMagicTextReveal() {
 
     Array.from(container.childNodes).forEach(processNode);
 
-    const wordSpans = Array.from(container.querySelectorAll('.magic-reveal-word'));
-    if (wordSpans.length === 0) return;
-
-    const totalWords = wordSpans.length;
-
-    const updateReveal = () => {
-      const parentSection = container.closest('.video-separator-section') || container;
-      const rect = parentSection.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Start reveal when top of section reaches 85% of viewport
-      // Finish reveal when top reaches 30% of viewport
-      const start = windowHeight * 0.85;
-      const end = windowHeight * 0.30;
-      const totalDistance = start - end;
-      const currentPos = start - rect.top;
-
-      let progress = currentPos / totalDistance;
-      progress = Math.max(0, Math.min(1, progress));
-
-      wordSpans.forEach((span, index) => {
-        const wordStart = index / totalWords;
-        const wordEnd = (index + 1) / totalWords;
-
-        if (progress >= wordEnd) {
-          span.style.opacity = '1';
-          span.style.filter = 'blur(0px)';
-          span.style.transform = 'translateY(0px)';
-        } else if (progress <= wordStart) {
-          span.style.opacity = '0.15';
-          span.style.filter = 'blur(4px)';
-          span.style.transform = 'translateY(4px)';
-        } else {
-          const wordProgress = (progress - wordStart) / (1 / totalWords);
-          span.style.opacity = (0.15 + 0.85 * wordProgress).toFixed(2);
-          span.style.filter = `blur(${(4 * (1 - wordProgress)).toFixed(1)}px)`;
-          span.style.transform = `translateY(${(4 * (1 - wordProgress)).toFixed(1)}px)`;
-        }
-      });
-    };
-
-    window.addEventListener('scroll', updateReveal, { passive: true });
-    updateReveal();
+    wordSpans.forEach((span) => {
+      span.style.opacity = '1';
+      span.style.filter = 'blur(0px)';
+      span.style.transform = 'translateY(0px)';
+    });
   });
 }
 

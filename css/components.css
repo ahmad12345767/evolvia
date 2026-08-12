@@ -374,6 +374,7 @@
   .hero-subtitle-desktop {
     display: none;
   }
+
   .hero-subtitle-mobile {
     display: inline;
   }
@@ -689,7 +690,7 @@
 .chat-messages {
   flex: 1;
   min-height: 220px;
-  overflow: visible;
+  overflow: hidden;
   padding: 18px 0;
   display: flex;
   flex-direction: column;
@@ -877,7 +878,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
-  overflow: visible;
+  overflow: hidden;
   padding-bottom: 24px;
 }
 
@@ -1651,7 +1652,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     max-height: none !important;
     width: 100% !important;
     max-width: 100% !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     background: #000000 !important;
     padding: 20px 0 !important;
   }
@@ -1664,7 +1665,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     padding: 0 16px !important;
     box-sizing: border-box !important;
     background: #000000 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .mobile-showcase-img {
@@ -1741,7 +1742,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 
   .widget-box {
     padding: 16px;
-    overflow-x: hidden;
+    overflow: hidden !important;
   }
 
   .task-item {
@@ -1767,8 +1768,9 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
   }
 
   .chat-messages {
-    max-height: 170px !important;
+    max-height: none !important;
     min-height: 110px !important;
+    overflow: hidden !important;
     padding: 10px 12px !important;
     margin-bottom: 10px !important;
   }
@@ -1781,13 +1783,9 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
   .chat-prompts {
     display: flex !important;
     flex-wrap: wrap !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     gap: 8px !important;
     padding: 8px 0 10px 0 !important;
-  }
-
-  .chat-prompts::-webkit-scrollbar {
-    display: none !important;
   }
 
   .chat-chip {
@@ -2205,7 +2203,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 /* Article Comparison Table Styling */
 .article-comparison-table-wrapper {
   width: 100%;
-  overflow: visible;
+  overflow: hidden;
   margin: 32px 0;
   border-radius: 16px;
   border: 1px solid rgba(223, 122, 254, 0.25);

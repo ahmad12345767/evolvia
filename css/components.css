@@ -1614,6 +1614,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     line-height: 1.25;
     word-break: normal;
     overflow-wrap: break-word;
+    margin-bottom: 10px !important;
   }
 
   .hero-subtitle {
@@ -1621,6 +1622,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
     line-height: 1.5;
     word-break: normal;
     overflow-wrap: break-word;
+    margin: 10px auto 32px auto !important;
   }
 
   .hero-actions {

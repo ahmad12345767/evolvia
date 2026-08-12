@@ -59,62 +59,48 @@ document.addEventListener('DOMContentLoaded', () => {
   const animateCharTitles = document.querySelectorAll('.text-animate-chars');
   animateCharTitles.forEach((el) => splitTextToChars(el));
 
-  // Smart Video Hydrator: Hydrates data-src attributes post-paint & on scroll
-  const initSmartVideoHydration = () => {
-    // 1. Background & Hero Videos - Hydrate immediately post-paint
-    const priorityVideos = document.querySelectorAll('.video-bg-video, .trust-badge-video');
-    priorityVideos.forEach((video) => {
+  // High-Performance Instant Video Pre-Buffering & Playback Engine
+  const initHighPerformanceVideoEngine = () => {
+    const allVideos = document.querySelectorAll('video');
+    allVideos.forEach((video) => {
+      // 1. Ensure any remaining data-src is hydrated immediately
       const sources = video.querySelectorAll('source[data-src]');
       sources.forEach((s) => {
-        if (s.dataset.src && !s.src) {
-          s.src = s.dataset.src;
-        }
+        if (s.dataset.src && !s.src) s.src = s.dataset.src;
       });
-      if (video.dataset.src && !video.src) {
-        video.src = video.dataset.src;
-      }
+      if (video.dataset.src && !video.src) video.src = video.dataset.src;
+
+      // 2. Pre-buffer video & trigger playback
+      video.preload = 'auto';
       video.load();
-      const p = video.play();
-      if (p !== undefined) p.catch(() => { });
-    });
 
-    // 2. Off-screen Showcase & Section Videos - Lazy hydrate via IntersectionObserver
-    const lazyVideos = document.querySelectorAll('video:not(.video-bg-video):not(.trust-badge-video)');
-
-    if ('IntersectionObserver' in window) {
-      const videoObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const video = entry.target;
-            const sources = video.querySelectorAll('source[data-src]');
-            sources.forEach((s) => {
-              if (s.dataset.src && !s.src) s.src = s.dataset.src;
-            });
-            if (video.dataset.src && !video.src) video.src = video.dataset.src;
-            video.load();
-            const p = video.play();
-            if (p !== undefined) p.catch(() => { });
-            observer.unobserve(video);
-          }
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Retry playback on first user touch/click if browser power-saver mode blocked initial autoplay
+          const enablePlayOnTouch = () => {
+            video.play().catch(() => {});
+            window.removeEventListener('touchstart', enablePlayOnTouch);
+            window.removeEventListener('click', enablePlayOnTouch);
+          };
+          window.addEventListener('touchstart', enablePlayOnTouch, { passive: true, once: true });
+          window.addEventListener('click', enablePlayOnTouch, { passive: true, once: true });
         });
-      }, { rootMargin: '300px 0px' });
+      }
 
-      lazyVideos.forEach((v) => videoObserver.observe(v));
-    } else {
-      lazyVideos.forEach((v) => {
-        const sources = v.querySelectorAll('source[data-src]');
-        sources.forEach((s) => { if (s.dataset.src && !s.src) s.src = s.dataset.src; });
-        if (v.dataset.src && !v.src) v.src = v.dataset.src;
-        v.load();
-      });
-    }
+      // 3. Mark video as loaded for smooth opacity fade-in
+      const markLoaded = () => video.classList.add('video-loaded');
+      if (video.readyState >= 3) {
+        markLoaded();
+      } else {
+        video.addEventListener('canplay', markLoaded, { once: true });
+        video.addEventListener('playing', markLoaded, { once: true });
+      }
+    });
   };
 
-  if (document.readyState === 'complete') {
-    setTimeout(initSmartVideoHydration, 100);
-  } else {
-    window.addEventListener('load', () => setTimeout(initSmartVideoHydration, 100));
-  }
+  // Run video engine immediately post-DOMReady
+  initHighPerformanceVideoEngine();
 
   // Event-driven Hero Text Animation: Wait until background video is playing before displaying text
   let heroTextTriggered = false;

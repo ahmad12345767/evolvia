@@ -676,8 +676,7 @@
 .chat-messages {
   flex: 1;
   min-height: 220px;
-  max-height: 320px;
-  overflow-y: auto;
+  overflow: visible;
   padding: 18px 0;
   display: flex;
   flex-direction: column;
@@ -862,28 +861,15 @@
 }
 
 .case-slider-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
-  cursor: grab;
-  user-select: none;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  overflow: visible;
   padding-bottom: 24px;
 }
 
-.case-slider-container:active {
-  cursor: grabbing;
-}
-
 .case-card {
-  flex: 0 0 420px;
-  scroll-snap-align: start;
-}
-
-@media (max-width: 576px) {
-  .case-card {
-    flex: 0 0 85vw;
-  }
+  width: 100%;
 }
 
 .case-quote {
@@ -1779,13 +1765,10 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 
   .chat-prompts {
     display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
+    flex-wrap: wrap !important;
+    overflow: visible !important;
     gap: 8px !important;
     padding: 8px 0 10px 0 !important;
-    -webkit-overflow-scrolling: touch !important;
-    scroll-snap-type: x mandatory !important;
-    scrollbar-width: none !important;
   }
 
   .chat-prompts::-webkit-scrollbar {
@@ -2207,7 +2190,7 @@ elevenlabs-convai p:has(a[href*="elevenlabs"]) {
 /* Article Comparison Table Styling */
 .article-comparison-table-wrapper {
   width: 100%;
-  overflow-x: auto;
+  overflow: visible;
   margin: 32px 0;
   border-radius: 16px;
   border: 1px solid rgba(223, 122, 254, 0.25);

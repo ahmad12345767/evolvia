@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Scroll Reveal Observer
   const revealElements = document.querySelectorAll('.reveal');
-  
+
   const revealOnScroll = () => {
     const windowHeight = window.innerHeight;
     revealElements.forEach((el) => {
@@ -84,12 +84,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       video.load();
       const p = video.play();
-      if (p !== undefined) p.catch(() => {});
+      if (p !== undefined) p.catch(() => { });
     });
 
     // 2. Off-screen Showcase & Section Videos - Lazy hydrate via IntersectionObserver
     const lazyVideos = document.querySelectorAll('video:not(.video-bg-video):not(.trust-badge-video)');
-    
+
     if ('IntersectionObserver' in window) {
       const videoObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (video.dataset.src && !video.src) video.src = video.dataset.src;
             video.load();
             const p = video.play();
-            if (p !== undefined) p.catch(() => {});
+            if (p !== undefined) p.catch(() => { });
             observer.unobserve(video);
           }
         });
@@ -146,10 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const header = item.querySelector('.accordion-header');
     header.addEventListener('click', () => {
       const isActive = item.classList.contains('active');
-      
+
       // Close other items
       accordionItems.forEach((other) => other.classList.remove('active'));
-      
+
       if (!isActive) {
         item.classList.add('active');
       }
@@ -214,12 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // Send form data asynchronously to Gmail
       fetch(targetUrl, {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify(dataObj)
-      }).catch(() => {});
+      }).catch(() => { });
 
       form.reset();
     });
@@ -477,8 +477,6 @@ function initCustomWeightedScroll() {
   let isScrolling = false;
 
   window.addEventListener('wheel', (e) => {
-    if (e.target.closest('.chat-messages, .widget-box, .comparison-table')) return;
-
     e.preventDefault();
     targetY += e.deltaY * multiplier;
 

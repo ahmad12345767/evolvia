@@ -406,33 +406,48 @@ function initSmoothScroll() {
   const isTouchMobile = window.innerWidth <= 992 || ('ontouchstart' in window && window.innerWidth < 1024);
   if (isTouchMobile) return; // Allow mobile OS native 120Hz smooth scrolling without JS input latency
 
-  if (typeof Lenis !== 'undefined') {
-    const lenis = new Lenis({
-      duration: 1.8,          // Heavy luxury damping (1.8s momentum decay)
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 0.65,  // Takes deliberate effort / scrolls slower and heavier like Framer!
-      touchMultiplier: 1.0,
-      infinite: false,
-    });
+  const setupLenis = () => {
+    if (typeof Lenis !== 'undefined') {
+      if (window.lenisInstance) {
+        window.lenisInstance.destroy();
+      }
+      const lenis = new Lenis({
+        duration: 2.2,          // Heavy luxury damping (2.2s momentum decay)
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        wheelMultiplier: 0.6,   // Heavy weighted inertia scroll like Framer
+        touchMultiplier: 1.0,
+        infinite: false,
+      });
 
-    function raf(time) {
-      lenis.raf(time);
+      window.lenisInstance = lenis;
+
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
+    } else {
+      initCustomWeightedScroll();
     }
-    requestAnimationFrame(raf);
-  } else {
-    initCustomWeightedScroll();
+  };
+
+  setupLenis();
+  if (typeof Lenis === 'undefined') {
+    window.addEventListener('load', setupLenis, { once: true });
+    setTimeout(setupLenis, 300);
   }
 }
 
 function initCustomWeightedScroll() {
   if ('ontouchstart' in window && window.innerWidth < 1024) return;
+  if (window.customWeightedScrollInitialized) return;
+  window.customWeightedScrollInitialized = true;
 
   let targetY = window.scrollY;
   let currentY = window.scrollY;
-  const ease = 0.065;      // Heavy inertia damping (lower = smoother & heavier)
-  const multiplier = 0.65; // Wheel scroll effort multiplier
+  const ease = 0.045;      // Heavy inertia damping (lower = smoother & heavier)
+  const multiplier = 0.55; // Heavy scroll effort multiplier
   let isScrolling = false;
 
   window.addEventListener('wheel', (e) => {
@@ -452,7 +467,7 @@ function initCustomWeightedScroll() {
     const diff = targetY - currentY;
     currentY += diff * ease;
 
-    if (Math.abs(diff) > 0.3) {
+    if (Math.abs(diff) > 0.2) {
       window.scrollTo(0, currentY);
       requestAnimationFrame(render);
     } else {
